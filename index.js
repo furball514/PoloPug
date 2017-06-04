@@ -20,7 +20,7 @@ export default class Index extends React.Component {
     return (
       <Container>
         <Header style={{ backgroundColor: "green" }} title="Poloniex" hasTabs>
-          <Text style={{ color: "white" }}> Poloview </Text>
+          <Text style={{ color: "white" }}> PoloPug </Text>
         </Header>
         <Tabs renderTabBar={() => <ScrollableTab />}>
           <Tab heading="Exchange">

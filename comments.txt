@@ -369,19 +369,7 @@ tb
     };
     connection.open();
 
-<script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAxY5hgtxb8EhU6JKO-pyvCLUJPZ0jZJ8M",
-    authDomain: "poloniex-clone.firebaseapp.com",
-    databaseURL: "https://poloniex-clone.firebaseio.com",
-    projectId: "poloniex-clone",
-    storageBucket: "poloniex-clone.appspot.com",
-    messagingSenderId: "29951067023"
-  };
-  firebase.initializeApp(config);
-</script>
+
     */
     /*
 export class Btc_bcn extends React.Component {

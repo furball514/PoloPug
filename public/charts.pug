@@ -1,0 +1,111 @@
+doctype html
+html
+ head
+  link(rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all")
+ body
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+  script(src='https://www.amcharts.com/lib/3/amcharts.js')
+  script(src='https://www.amcharts.com/lib/3/serial.js')
+  script(src='https://www.amcharts.com/lib/3/plugins/export/export.min.js')
+  script(src='https://www.amcharts.com/lib/3/themes/light.js')
+  #chartcontainer(style="height: 100%; width: 100%")
+   #chartdiv(style="height: 500px; width: 100%")
+    #curtain(style="width: auto")
+     span Chart is loading...
+  script(type='text/javascript').
+      $(document).ready(() => {
+      $("#curtain").show();
+      var opt = true;
+      Number.prototype.noExponents = function() {
+      var data = String(this).split(/[eE]/);
+      if (data.length == 1) return data[0];
+      var z = "",
+      sign = this < 0 ? "-" : "",
+      str = data[0].replace(".", ""),
+      mag = Number(data[1]) + 1;
+      if (mag < 0) {
+      z = sign + "0.";
+      while (mag++)
+      z += "0";
+      return z + str.replace(/^\\-/, "");
+      }
+      mag -= str.length;
+      while (mag--)
+      z += "0";
+      return str + z;
+      };
+      $.getJSON(
+      "https://poloniex.com/public?command=returnChartData&currencyPair=#{pair}&start=1405699200&end=9999999999&period=86400",
+      data => {
+      data.map(record => {
+      record.date *= 1000;
+      });
+      var chart = AmCharts.makeChart(
+      "chartdiv",
+      {
+      type: "serial",
+      theme: "light",
+      valueAxes: [
+      {
+      labelFunction: function(value, valueText, valueAxis) {
+      if (opt)
+      return value.noExponents();
+      else return value;
+      },
+      position: "left"
+      }
+      ],
+      graphs: [
+      {
+      id: "g1",
+      balloonText: "Open:<b>[[open]]</b><br>Low:<b>[[low]]</b><br>High:<b>[[high]]</b><br>Close:<b>[[close]]</b><br>",
+      closeField: "close",
+      fillColors: "#117e1a",
+      highField: "high",
+      lineColor: "#117e1a",
+      lineAlpha: 1,
+      lowField: "low",
+      fillAlphas: 0.9,
+      negativeFillColors: "#7b1111",
+      negativeLineColor: "#7b1111",
+      openField: "open",
+      title: "Price:",
+      type: "candlestick",
+      valueField: "close"
+      }
+      ],
+      chartScrollbar: {
+      graph: "g1",
+      graphType: "line",
+      scrollbarHeight: 30
+      },
+      chartCursor: {
+      valueLineEnabled: true,
+      valueLineBalloonEnabled: true
+      },
+      categoryField: "date",
+      categoryAxis: {
+      parseDates: true
+      },
+      dataProvider: data,
+      export: {
+      enabled: true,
+      position: "bottom-right"
+      }
+      },
+      2000
+      );
+      chart.addListener("rendered", zoomChart);
+      zoomChart();
+      chart.addListener("rendered", e => {
+      $("#curtain").hide();
+      });
+      function zoomChart() {
+      chart.zoomToIndexes(
+      chart.dataProvider.length - 10,
+      chart.dataProvider.length - 1
+      );
+      }
+      }
+      );
+      });

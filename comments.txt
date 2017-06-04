@@ -1,0 +1,448 @@
+/*componentWillMount () {
+    var ws = new WebSocket('wss://api.poloniex.com');
+ws.onopen = (e) => {
+  console.log(e.data); 
+};
+ws.onmessage = (e) => {
+  console.log(e.data);
+};
+ws.onerror = (e) => {
+  console.log(e.message);
+};
+ws.onclose = (e) => {
+  console.log(e.code, e.reason);
+};}componentDidMount(){const wsuri = "wss://api.poloniex.com";const connection=newautobahn.Connection({
+  transports: [{
+    type: 'mobile',
+    url: wsuri
+  }],
+  realm: "realm1"
+});
+connection.onopen = (session) => {
+	function tickerEvent (args,kwargs) {
+		console.log(args);
+	}
+	session.subscribe('ticker', tickerEvent);
+}
+connection.onclose = () => {
+  console.log("Websocket connection closed");
+}		       
+connection.open();
+  <Tab>
+                <Content padder>
+                  <Text> hhh </Text>
+                  </Content>
+                  </Tab>
+                  <Tab>
+                  <Content padder>
+                    <Text> jjj </Text>
+                    </Content>
+                    </Tab>
+                    <Tab>
+                    <Content padder>
+                      <Text> vvv </Text>
+                      </Content>
+                      </Tab>
+                      <Tab>
+                      <Content padder>
+                        <Text> bbb </Text>
+                        </Content>
+                        </Tab>
+                          {
+                    if (this.state.segment === "BTC"){
+                    return <Btc />;
+                  }
+                  else if (this.state.segment === "ETH") {
+                    return <Eth />;
+                  }
+                  else if (this.state.segment === "XMR") {
+                    return <Xmr />;
+                  }
+                  else if (this.state.segment === "USDT") {
+                    return <Usdt />;
+                  }
+                  state = {
+   segment: "",
+   btcActive: true,
+   ethActive: false,
+   xmrActive: false,
+   usdtActive: false
+  };
+
+ btcHandlePress (e) {
+   this.setState({
+     segment: 'ETH',
+     btcActive: true,
+     ethActive: false,
+     xmrActive: false,
+     usdtActive: false
+   });
+   console.log(this.state.segment);
+  }
+
+  ethHandlePress (e) {
+   this.setState({
+     segment: 'XMR',
+     ethActive: true,
+     btcActive: false,
+     xmrActive: false,
+     usdtActive: false 
+   });
+   console.log(this.state.segment);
+  }
+
+  xmrHandlePress (e) {
+   this.setState({
+     segment: 'USDT',
+     xmrActive: true,
+     btcActive: false,
+     ethActive: false,
+     usdtActive: false  
+   });
+   console.log(this.state.segment);
+  }
+
+  usdtHandlePress (e) {
+   this.setState({
+     segment: 'BTC',
+     usdtActive: true,
+     btcActive: false,
+     ethActive: false,
+     xmrActive: false  
+   });
+   console.log(this.state.segment);
+  }
+
+  handleContent() {
+    switch (this.state.segment) {
+      case "BTC":
+      return <Btc />;
+      break;
+      case "ETH":
+      return <Eth />;
+      break;
+      case "XMR":
+      return <Xmr />;
+      break;
+      case "USDT":
+      return <Usdt />;
+      break;
+    }
+  } <Footer fixed>
+            <FooterTab>
+              <Button>
+                <Icon name="apps" />
+              </Button>
+              <Button>
+                <Icon name="camera" />
+              </Button>
+              <Button active>
+                <Icon active name="navigate" />
+              </Button>
+              <Button>
+                <Icon name="person" />
+              </Button>
+            </FooterTab>
+          </Footer>
+
+  render() {
+    return (
+      <Container>
+              <Header hasSegment>
+                <Body>
+                  <Segment>
+                    <Button first onPress={ return <Btc />; } active={this.state.btcActive}>
+                      <Text style={styles.text}> BTC </Text>
+                      </Button>
+                      <Button onPress={this.ethHandlePress().bind(this)} active={this.state.ethActive}>
+                        <Text style={styles.text}> ETH </Text>
+                        </Button> 
+                        <Button onPress={this.xmrHandlePress.bind(this)} active={this.state.xmrActive}>
+                          <Text style={styles.text}> XMR </Text>
+                          </Button>
+                          <Button last onPress={this.usdtHandlePress.bind(this)} active={this.state.usdtActive}>
+                            <Text style={styles.text}> USDT </Text>
+                            </Button>
+                    </Segment>
+                  </Body>
+                </Header>
+                <Content>
+                
+                  </Content>
+        </Container>
+    );
+  }
+} <Container>
+        <Content>
+          <Card>
+            <Header hasTabs>
+              <Tabs>
+                <Tab heading="BTC">
+                 <CardItem>
+                   <Body>
+                  <Btc />
+                  </Body>
+                  </CardItem>
+                </Tab>
+                <Tab heading="ETH">
+                  <Eth />
+                </Tab>
+                <Tab heading="XMR">
+                  <Xmr />
+                </Tab>
+                <Tab heading="USDT">
+                  <Usdt />
+                </Tab>
+              </Tabs>
+            </Header>
+          </Card>
+        </Content>
+      </Container>
+      import Btc from "./Btc";
+import Eth from "./Eth";
+import Xmr from "./Xmr";
+import Usdt from "./Usdt";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { CardItem, Body } from "native-base";
+import axios from "axios";
+
+/**
+ * 
+ * 
+ * @export
+ * @class Btc
+ * @extends {React.Component}
+export default class Btc extnds React.Component {
+  state = {
+    data: []
+  };
+
+  componentDidMount() {
+    axios.get("https://poloniex.com/public?command=returnTicker").then(data => {
+      this.setState({
+        data: JSON.stringify(data.data)
+      });
+    });
+    console.log(this.state.data);
+  }
+
+  render() {
+    return (
+           <Text style={styles.content}> {this.state.data} </Text>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff"
+  },
+  content: {
+    color: "white"
+  }
+});
+  }*/     {/*
+          <Seperator>
+            <Text> ETH </Text>
+          </Seperator>
+          <ListItem> <Text style={styles.text}> cheta </Text> </ListItem>
+          */}
+                      {/*
+          <Text style={styles.text}>
+            {" "}{JSON.stringify(this.state.dataEth)}{" "}
+          </Text>
+          
+          <Seperator>
+            <Text> BTC </Text>
+
+sort
+search
+usdt
+charts,orders,mkhis,page
+refresh
+slider
+margin table
+heading
+tb
+
+/*     let html = `<script src="https://www.amcharts.com/lib/3/amcharts.js"></script><script src="https://www.amcharts.com/lib/3/serial.js"></script><script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script><link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" /><script src="https://www.amcharts.com/lib/3/themes/light.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><div id="chartcontainer"><div id="chartdiv"></div><div id="curtain"><span>Chart is loading...</span></div></div>
+       <script>
+         $('#curtain').hide();
+    function charting () {
+    var chart = AmCharts.makeChart( "chartdiv", {
+  "type": "serial",
+  "valueAxes": [ {
+    "position": "left"
+  } ],
+  "graphs": [ {
+    "id": "g1",
+    "balloonText": "Open:<b>[[open]]</b><br>Low:<b>[[low]]</b><br>High:<b>[[high]]</b><br>Close:<b>[[close]]</b><br>",
+    "closeField": "close",
+    "fillColors": "#117e1a",
+    "highField": "high",
+    "lineColor": "#117e1a",
+    "lineAlpha": 1,
+    "lowField": "low",
+    "fillAlphas": 0.9,
+    "negativeFillColors": "#7b1111",
+    "negativeLineColor": "#7b1111",
+    "openField": "open",
+    "title": "Price:",
+    "type": "candlestick",
+    "valueField": "close"
+  } ],
+  
+  "chartScrollbar": {
+    "graph": "g1",
+    "graphType": "line",
+    "scrollbarHeight": 30
+  },
+  "chartCursor": {
+    "valueLineEnabled": true,
+    "valueLineBalloonEnabled": true
+  },
+  "categoryField": "date",
+  "categoryAxis": {
+    "parseDates": true
+  },
+      "dataProvider": ${this.state.candlesticks} /*.map(record => {
+                        record.date *= 1000;
+                        record.high = +record.high;
+                        record.low = +record.low;
+                        record.open = +record.high;
+                        record.close = +record.close;
+                      })}*/
+    },2000);
+    chart.addListener("rendered",function(e){
+      $('#curtain').hide();
+    });
+  });
+} charting();
+       </script>
+      `;*/
+
+      /*
+    const ws = new WebSocket("wss://api.poloniex.com", [
+      "wamp.2.cbor.batched",
+      "wamp.2.cbor",
+      "wamp.2.msgpack.batched",
+      "wamp.2.msgpack",
+      "wamp.2.json.batched",
+      "wamp.2.json"
+    ]);
+    ws.onopen = session => {
+      ws.send("ticker");
+    };
+    ws.onmessage = e => {
+      // a message was
+      console.log(e.data);
+    };
+    ws.onerror = e => {
+      // an error occurred
+      console.log(e.message);
+    };
+    ws.onclose = e => {
+      // connection closed
+      console.log(e.code, e.reason);
+    };
+
+    /*
+    const WEBSOCKET_API_URL = "wss://api.poloniex.com";
+    const connection = new wamp.Connection({
+      transports: [
+        {
+          type: "mobile",
+          url: "wss://api.poloniex.com"
+        }
+      ],
+      realm: "realm1"
+    });
+    connection.onopen = session => {
+      function tickerEvent(args, kwargs) {
+        console.log(args);
+      }
+      session.subscribe("ticker", tickerEvent);
+    };
+    connection.onclose = () => {
+      console.log("closed");
+    };
+    connection.open();
+
+<script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAxY5hgtxb8EhU6JKO-pyvCLUJPZ0jZJ8M",
+    authDomain: "poloniex-clone.firebaseapp.com",
+    databaseURL: "https://poloniex-clone.firebaseio.com",
+    projectId: "poloniex-clone",
+    storageBucket: "poloniex-clone.appspot.com",
+    messagingSenderId: "29951067023"
+  };
+  firebase.initializeApp(config);
+</script>
+    */
+    /*
+export class Btc_bcn extends React.Component {
+  state = {
+    candlesticks: [],
+    tickerData: [],
+    refreshing: false
+  };
+
+  componentWillMount() {
+    this.base = "BCN";
+    axios
+      .get(
+        `https://poloniex.com/public?command=returnChartData&currencyPair=${global.quote}_${this.base}&start=1405699200&end=9999999999&period=86400`
+      )
+      .then(response => {
+        this.setState({ candlesticks: response.data });
+      });
+  }
+
+  componentDidMount() {
+    this.getTickerData();
+    //this.autoRefresh();
+  }
+
+  getTickerData() {
+    axios
+      .get(`https://bright-element.glitch.me/${global.quote}_${this.base}`)
+      .then(response => {
+        this.setState({
+          tickerData: response.data[response.data.length - 1]
+        });
+        // console.log(this.state.tickerData);
+      });
+  }
+
+  autoRefresh() {
+    this.setState({ interval: setInterval(this.getTickerData, 2000) });
+  }
+
+
+
+  
+
+
+
+  componentWillUnmount() {
+    clearInterval(this.state.interval);
+  }
+
+  onRefresh() {
+    this.setState({ refreshing: true });
+    this.getTickerData().then(() => {
+      this.setState({ refreshing: false });
+    });
+  }
+
+  render() {
+    return (
+
+    );
+  }
+}
+*/

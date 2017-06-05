@@ -1,5 +1,4 @@
 import React from "react";
-import { View, Text } from "react-native";
 import Pusher from "pusher-js/react-native";
 import Views from "./pageviews";
 import axios from "axios";
@@ -19,10 +18,7 @@ export default class Page extends React.Component {
       low: this.props.low
     },
     base: this.props.base,
-    quote: this.props.quote,
-    buyOrders: [],
-    sellOrders: [],
-    tradeHistory: []
+    quote: this.props.quote
   };
 
   componentWillMount() {
@@ -34,40 +30,6 @@ export default class Page extends React.Component {
     channel.bind("ticker", tickerData => {
       this.setState({ tickerData });
     });
-    this.refresh();
-    this.autoRefresh();
-  }
-
-  componentDidMount() {
-    Pusher.logToConsole = true;
-    const pusher = new Pusher("fcd289e4102c38a00414", {
-      encrypted: true
-    });
-    axios
-      .get(`https://bright-element.glitch.me/orders/${this.props.pair}`)
-      .then(() => {
-        const orderChannel = pusher.subscribe("channel");
-        orderChannel.bind("buyorders", buyOrders => {
-          this.setState({ buyOrders: this.state.buyOrders.push(buyOrders) });
-        });
-        orderChannel.bind("sellorders", sellOrders => {
-          this.setState({ sellOrders: this.state.sellOrders.push(sellOrders) });
-        });
-      });
-  }
-
-  refresh() {
-    axios
-      .get(
-        `https://poloniex.com/public?command=returnTradeHistory&currencyPair=${this.props.pair}`
-      )
-      .then(responseData => {
-        this.setState({ tradeHistory: responseData.data });
-      });
-  }
-  
-  autoRefresh() {
-    setInterval(this.refresh,3000);
   }
 
   render() {
@@ -76,9 +38,6 @@ export default class Page extends React.Component {
         tickerData={this.state.tickerData}
         base={this.state.base}
         quote={this.state.quote}
-        buyOrders={this.state.buyOrders}
-        sellOrders={this.state.sellOrders}
-        tradeHistory={this.state.tradeHistory}
       />
     );
   }

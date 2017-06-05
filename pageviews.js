@@ -12,6 +12,8 @@ import {
   ListItem,
   Footer
 } from "native-base";
+import Pusher from "pusher-js/react-native";
+import axios from "axios";
 
 export default class Views extends React.Component {
   roundOffChange() {
@@ -25,7 +27,10 @@ export default class Views extends React.Component {
         );
         break;
       default:
-        result = `+${change.replace(change.substr(change.indexOf(".") + 3, change.length), "")}`;
+        result = `+${change.replace(
+          change.substr(change.indexOf(".") + 3, change.length),
+          ""
+        )}`;
         break;
     }
     return result;
@@ -80,7 +85,7 @@ export default class Views extends React.Component {
                     {this.roundOffChange()}%
                   </Text>
                 </Text>
-                {"    "}
+                <Text> {"  "} </Text>
                 <Text>
                   Vol:{this.roundOffVolume()}{this.props.quote}
                 </Text>
@@ -130,50 +135,127 @@ export default class Views extends React.Component {
           <Card>
             <WebView
               source={{
-                uri: `https://bright-element.glitch.me/charts/${this.props.tickerData.currencyPair}`
+                uri: `https://bright-element.glitch.me/charts/${this.props
+                  .tickerData.currencyPair}`
               }}
               style={{ height: 500, alignSelf: "stretch" }}
             />
           </Card>
-          <View style={styles.border} />
+          <View
+            style={{
+              borderBottomColor: "#888d91",
+              borderBottomWidth: 1
+            }}
+          />
 
-          <Card>
-            <List
-              dataArray={this.props.buyOrders}
-              renderRow={item => (
-                <ListItem>
-                  <Body> <Text> {item} </Text> </Body>
-                </ListItem>
-              )}
-            />
-          </Card>
-          <View style={styles.border} />
-
-          <Card>
-            <List
-              dataArray={this.props.sellOrders}
-              renderRow={item => (
-                <ListItem>
-                  <Body> <Text> {item} </Text> </Body>
-                </ListItem>
-              )}
-            />
-          </Card>
-          <View style={styles.border} />
-
-          <Card>
-            <List
-              dataArray={this.props.tradeHistory}
-              renderRow={item => <ListItem />}
-            />
-          </Card>
-          <View style={styles.border} />
+          <ViewsTwo pair={this.props.tickerData.currencyPair} />
 
           <Footer>
-            {" "}<Text> {JSON.stringify(this.props.tickerData)} </Text>{" "}
+            <Text>
+              {" "}
+              {JSON.stringify(this.props.tickerData)}
+              {" "}
+            </Text>
           </Footer>
         </Content>
       </Container>
+    );
+  }
+}
+
+class ViewsTwo extends React.Component {
+  state = {
+    buyOrders: [],
+    sellOrders: [],
+    tradeHistory: [{},{},{}]
+  };
+
+  componentWillMount() {
+    Pusher.logToConsole = true;
+    const pusher = new Pusher("fcd289e4102c38a00414", {
+      encrypted: true
+    });
+    axios
+      .get(`https://bright-element.glitch.me/orders/${this.props.pair}`)
+      .then(() => {
+        const orderChannel = pusher.subscribe("channel");
+        orderChannel.bind("buyorders", buyOrders => {
+          this.setState({
+            buyOrders: this.state.buyOrders.concat([buyOrders])
+          });
+        });
+        orderChannel.bind("sellorders", sellOrders => {
+          this.setState({
+            sellOrders: this.state.sellOrders.concat([sellOrders])
+          });
+        });
+      });
+    // this.refresh();
+    // this.autoRefresh();
+  }
+
+  refresh() {
+    axios
+      .get(
+        `https://poloniex.com/public?command=returnTradeHistory&currencyPair=${this
+          .props.pair}`
+      )
+      .then(responseData => {
+        this.setState({ tradeHistory: responseData.data });
+      });
+  }
+
+  autoRefresh() {
+    setInterval(this.refresh, 3000);
+  }
+
+  render() {
+    console.log(`buy: ${JSON.stringify(this.state.buyOrders)}`);
+    console.log(`sell: ${JSON.stringify(this.state.sellOrders)}`);
+    return (
+      <Card>
+        <Card>
+          <View style={{ height: 500 }}>
+            <List
+              dataArray={this.state.buyOrders}
+              renderRow={item =>
+                <ListItem>
+                  <Text>
+                    {" "}
+                    {JSON.stringify(item)}
+                    {" "}
+                  </Text>
+                </ListItem>}
+            />
+          </View>
+        </Card>
+        <View style={styles.border} />
+
+        <Card>
+          <View style={{ height: 500 }}>
+            <List
+              dataArray={this.state.sellOrders}
+              renderRow={item =>
+                <ListItem>
+                  <Text>
+                    {JSON.stringify(item)}
+                  </Text>
+                </ListItem>}
+            />
+          </View>
+        </Card>
+        <View style={styles.border} />
+
+        <Card>
+          <View style={{ height: 500 }}>
+            <List
+              dataArray={this.state.tradeHistory}
+              renderRow={item => <ListItem />}
+            />
+          </View>
+        </Card>
+        <View style={styles.border} />
+      </Card>
     );
   }
 }

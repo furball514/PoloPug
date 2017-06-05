@@ -20,7 +20,7 @@ export default class Index extends React.Component {
     return (
       <Container>
         <Header style={{ backgroundColor: "green" }} title="Poloniex" hasTabs>
-          <Text style={{ color: "white" }}> PoloPug </Text>
+          <Text style={{ color: "white" }}> This project is open sourced under the GNU-GPL v3.0 License. </Text>
         </Header>
         <Tabs renderTabBar={() => <ScrollableTab />}>
           <Tab heading="Exchange">

@@ -1,0 +1,24 @@
+/*
+componentWillMount(){var ws=new WebSocket('wss://api.poloniex.com');ws.onopen=(e)=>{console.log(e.data)};ws.onmessage=(e)=>{console.log(e.data)};ws.onerror=(e)=>{console.log(e.message)};ws.onclose=(e)=>{console.log(e.code,e.reason)}}componentDidMount(){const wsuri="wss://api.poloniex.com";const connection=newautobahn.Connection({transports:[{type:'mobile',url:wsuri}],realm:"realm1"});connection.onopen=(session)=>{function tickerEvent(args,kwargs){console.log(args)}
+session.subscribe('ticker',tickerEvent)}
+connection.onclose=()=>{console.log("Websocket connection closed")}
+connection.open();<Tab><Content padder><Text>hhh</Text></Content></Tab><Tab><Content padder><Text>jjj</Text></Content></Tab><Tab><Content padder><Text>vvv</Text></Content></Tab><Tab><Content padder><Text>bbb</Text></Content></Tab>{if(this.state.segment==="BTC"){return<Btc/>}
+else if(this.state.segment==="ETH"){return<Eth/>}
+else if(this.state.segment==="XMR"){return<Xmr/>}
+else if(this.state.segment==="USDT"){return<Usdt/>}
+state={segment:"",btcActive:!0,ethActive:!1,xmrActive:!1,usdtActive:!1};btcHandlePress(e){this.setState({segment:'ETH',btcActive:!0,ethActive:!1,xmrActive:!1,usdtActive:!1});console.log(this.state.segment)}
+ethHandlePress(e){this.setState({segment:'XMR',ethActive:!0,btcActive:!1,xmrActive:!1,usdtActive:!1});console.log(this.state.segment)}
+xmrHandlePress(e){this.setState({segment:'USDT',xmrActive:!0,btcActive:!1,ethActive:!1,usdtActive:!1});console.log(this.state.segment)}
+usdtHandlePress(e){this.setState({segment:'BTC',usdtActive:!0,btcActive:!1,ethActive:!1,xmrActive:!1});console.log(this.state.segment)}
+handleContent(){switch(this.state.segment){case "BTC":return<Btc/>;break;case "ETH":return<Eth/>;break;case "XMR":return<Xmr/>;break;case "USDT":return<Usdt/>;break}}<Footer fixed><FooterTab><Button><Icon name="apps"/></Button><Button><Icon name="camera"/></Button><Button active><Icon active name="navigate"/></Button><Button><Icon name="person"/></Button></FooterTab></Footer>render(){return(<Container><Header hasSegment><Body><Segment><Button first onPress={return<Btc/>}active={this.state.btcActive}><Text style={styles.text}>BTC</Text></Button><Button onPress={this.ethHandlePress().bind(this)}active={this.state.ethActive}><Text style={styles.text}>ETH</Text></Button><Button onPress={this.xmrHandlePress.bind(this)}active={this.state.xmrActive}><Text style={styles.text}>XMR</Text></Button><Button last onPress={this.usdtHandlePress.bind(this)}active={this.state.usdtActive}><Text style={styles.text}>USDT</Text></Button></Segment></Body></Header><Content></Content></Container>)}}<Container><Content><Card><Header hasTabs><Tabs><Tab heading="BTC"><CardItem><Body><Btc/></Body></CardItem></Tab><Tab heading="ETH"><Eth/></Tab><Tab heading="XMR"><Xmr/></Tab><Tab heading="USDT"><Usdt/></Tab></Tabs></Header></Card></Content></Container>import Btc from "./Btc";import Eth from "./Eth";import Xmr from "./Xmr";import Usdt from "./Usdt";import React from "react";import{StyleSheet,Text,View}from "react-native";import{CardItem,Body}from "native-base";import axios from "axios";{}
+{},2000);chart.addListener("rendered",function(e){$('#curtain').hide()})})}charting();</script>`;*/
+  const ws=new WebSocket("wss://api.poloniex.com",["wamp.2.cbor.batched","wamp.2.cbor","wamp.2.msgpack.batched","wamp.2.msgpack","wamp.2.json.batched","wamp.2.json"]);ws.onopen=session=>{ws.send("ticker")};ws.onmessage=e=>{console.log(e.data)};ws.onerror=e=>{console.log(e.message)};ws.onclose=e=>{console.log(e.code,e.reason)};const WEBSOCKET_API_URL="wss://api.poloniex.com";const connection=new wamp.Connection({transports:[{type:"mobile",url:"wss://api.poloniex.com"}],realm:"realm1"});connection.onopen=session=>{function tickerEvent(args,kwargs){console.log(args)}
+session.subscribe("ticker",tickerEvent)};connection.onclose=()=>{console.log("closed")};connection.open();<script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script><scri</script>export class Btc_bcn extends React.Component{state={candlesticks:[],tickerData:[],refreshing:!1};componentWillMount(){this.base="BCN";axios.get(
+        `https:).then(response=>{this.setState({candlesticks:response.data})})}
+componentDidMount(){this.getTickerData()}
+getTickerData(){axios.get(`https://bright-element.glitch.me/${global.quote}_${this.base}`).then(response=>{this.setState({tickerData:response.data[response.data.length-1]})})}
+autoRefresh(){this.setState({interval:setInterval(this.getTickerData,2000)})}
+componentWillUnmount(){clearInterval(this.state.interval)}
+onRefresh(){this.setState({refreshing:!0});this.getTickerData().then(()=>{this.setState({refreshing:!1})})}
+render(){return()}}
+*/

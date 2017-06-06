@@ -10,7 +10,8 @@ import {
   Right,
   List,
   ListItem,
-  Footer
+  Footer,
+  H3
 } from "native-base";
 import Pusher from "pusher-js/react-native";
 import axios from "axios";
@@ -141,20 +142,25 @@ export default class Views extends React.Component {
               style={{ height: 500, alignSelf: "stretch" }}
             />
           </Card>
-          <View
-            style={{
-              borderBottomColor: "#888d91",
-              borderBottomWidth: 1
-            }}
-          />
+          <View style={styles.border} />
 
           <ViewsTwo pair={this.props.tickerData.currencyPair} />
 
-          <Footer>
-            <Text>
-              {" "}
-              {JSON.stringify(this.props.tickerData)}
-              {" "}
+          <Footer
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            <Text style={styles.footerSub}>
+              {`Quote Volume: ${this.props.tickerData.quoteVolume}`}
+            </Text>
+            <Text style={styles.footerSub}>
+              {`Lowest Ask: ${this.props.tickerData.lowestAsk}`}
+            </Text>
+            <Text style={styles.footerSub}>
+              {`Highest Bid: ${this.props.tickerData.highestBid}`}
             </Text>
           </Footer>
         </Content>
@@ -167,7 +173,7 @@ class ViewsTwo extends React.Component {
   state = {
     buyOrders: [],
     sellOrders: [],
-    tradeHistory: [{},{},{}]
+    tradeHistory: []
   };
 
   componentWillMount() {
@@ -190,8 +196,6 @@ class ViewsTwo extends React.Component {
           });
         });
       });
-    // this.refresh();
-    // this.autoRefresh();
   }
 
   refresh() {
@@ -205,57 +209,72 @@ class ViewsTwo extends React.Component {
       });
   }
 
-  autoRefresh() {
-    setInterval(this.refresh, 3000);
+  async componentDidMount() {
+    let v;
+    try {
+      v = await this.refresh();
+    } catch (error) {
+      console.error(error);
+    }
+    setInterval(() => {
+      //this.refresh(); //to be uncommented
+      console.log("refreshed");
+    }, 5000);
   }
 
   render() {
-    console.log(`buy: ${JSON.stringify(this.state.buyOrders)}`);
-    console.log(`sell: ${JSON.stringify(this.state.sellOrders)}`);
+    console.log(`buy: ${this.state.buyOrders.length}`);
+    console.log(`sell: ${this.state.sellOrders.length}`);
+    console.log(`trade: ${this.state.tradeHistory.length}`);
     return (
-      <Card>
+      <Container>
         <Card>
-          <View style={{ height: 500 }}>
-            <List
-              dataArray={this.state.buyOrders}
-              renderRow={item =>
-                <ListItem>
-                  <Text>
-                    {" "}
-                    {JSON.stringify(item)}
-                    {" "}
-                  </Text>
-                </ListItem>}
-            />
-          </View>
+          <H3> BUY ORDERS </H3>
+          <List
+            style={{ height: 500 }}
+            dataArray={this.state.buyOrders}
+            renderRow={item =>
+              <ListItem>
+                <Text>
+                  {" "}
+                  {JSON.stringify(item)}
+                  {" "}
+                </Text>
+              </ListItem>}
+          />
         </Card>
         <View style={styles.border} />
 
         <Card>
-          <View style={{ height: 500 }}>
-            <List
-              dataArray={this.state.sellOrders}
-              renderRow={item =>
-                <ListItem>
-                  <Text>
-                    {JSON.stringify(item)}
-                  </Text>
-                </ListItem>}
-            />
-          </View>
+          <H3> SELL ORDERS </H3>
+          <List
+            style={{ height: 500 }}
+            dataArray={this.state.sellOrders}
+            renderRow={item =>
+              <ListItem>
+                <Text>
+                  {JSON.stringify(item)}
+                </Text>
+              </ListItem>}
+          />
         </Card>
         <View style={styles.border} />
 
         <Card>
-          <View style={{ height: 500 }}>
-            <List
-              dataArray={this.state.tradeHistory}
-              renderRow={item => <ListItem />}
-            />
-          </View>
+          <H3> MARKET HISTORY </H3>
+          <List
+            style={{ height: 500 }}
+            dataArray={this.state.tradeHistory}
+            renderRow={item =>
+              <ListItem>
+                <Text>
+                  {JSON.stringify(item)}
+                </Text>
+              </ListItem>}
+          />
+          <View style={styles.border} />
         </Card>
-        <View style={styles.border} />
-      </Card>
+      </Container>
     );
   }
 }
@@ -287,5 +306,9 @@ const styles = StyleSheet.create({
     borderBottomColor: "#888d91",
     borderBottomWidth: 1,
     marginBottom: 10
+  },
+  footerSub: {
+    fontSize: 10,
+    color: "white"
   }
 });

@@ -19,8 +19,8 @@ export default class Index extends React.Component {
   render() {
     return (
       <Container>
-        <Header style={{ backgroundColor: "green" }} hasTabs>
-          <Text style={{ color: "white" }}> This project is open sourced under the GNU-GPL v3.0 License. </Text>
+        <Header hasTabs>
+          <Text> This project is open sourced under the GNU-GPL v3.0 License. </Text>
         </Header>
         <Tabs renderTabBar={() => <ScrollableTab />}>
           <Tab heading="Exchange">

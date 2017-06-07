@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, View, Text, WebView, Slider } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  WebView,
+  Slider,
+  Switch,
+  AsyncStorage
+} from "react-native";
 import {
   Container,
   Content,
@@ -144,7 +152,11 @@ export default class Views extends React.Component {
           </Card>
           <View style={styles.border} />
 
-          <ViewsTwo pair={this.props.tickerData.currencyPair} />
+          <ViewsTwo
+            pair={this.props.tickerData.currencyPair}
+            base={this.props.base}
+            quote={this.props.quote}
+          />
 
           <Footer
             style={{
@@ -173,10 +185,11 @@ class ViewsTwo extends React.Component {
   state = {
     buyOrders: [],
     sellOrders: [],
-    tradeHistory: []
+    tradeHistory: [],
+    delayed: true
   };
 
-  componentWillMount() {
+  realtimeOrders() {
     Pusher.logToConsole = true;
     const pusher = new Pusher("fcd289e4102c38a00414", {
       encrypted: true
@@ -198,7 +211,21 @@ class ViewsTwo extends React.Component {
       });
   }
 
-  refresh() {
+  delayedOrders() {
+    axios
+      .get(
+        `https://poloniex.com/public?command=returnOrderBook&currencyPair=${this
+          .props.pair}`
+      )
+      .then(responseData => {
+        this.setState({
+          sellOrders: responseData.data.bids,
+          buyOrders: responseData.data.asks
+        });
+      });
+  }
+
+  refreshTrades() {
     axios
       .get(
         `https://poloniex.com/public?command=returnTradeHistory&currencyPair=${this
@@ -210,16 +237,77 @@ class ViewsTwo extends React.Component {
   }
 
   async componentDidMount() {
-    let v;
     try {
-      v = await this.refresh();
+      const value = await AsyncStorage.getItem("delayed");
+      if (value !== null) {
+        let val = value == "true";
+        this.setState({ delayed: val });
+      }
     } catch (error) {
       console.error(error);
     }
-    setInterval(() => {
-      //this.refresh(); //to be uncommented
-      console.log("refreshed");
-    }, 5000);
+
+    switch (this.state.delayed) {
+      case true:
+        let v;
+        let w;
+        try {
+          v = await this.refreshTrades();
+          w = await this.delayedOrders();
+        } catch (error) {
+          console.error(error);
+        }
+        setInterval(() => {
+          // this.refreshTrades(); //to be uncommented
+          // this.delayedOrders();
+          console.log("refreshed both");
+        }, 5000);
+        break;
+      case false:
+        this.realtimeOrders();
+        let x;
+        try {
+          x = await this.refreshTrades();
+        } catch (error) {
+          console.error(error);
+        }
+        setInterval(() => {
+          //this.refreshTrades(); //to be uncommented
+          console.log("refreshed trades");
+        }, 5000);
+        break;
+    }
+  }
+
+  formatted(item) {
+    let result;
+    switch (this.state.delayed) {
+      case true:
+        result = (
+          <Body>
+            <Text>Amount: {item[1]} {this.props.base}</Text>
+            <Text note>Price: {item[0]} {this.props.quote}</Text>
+          </Body>
+        );
+        break;
+      case false:
+        result = JSON.stringify(item);
+        break;
+    }
+    return result;
+  }
+
+  buysell(type) {
+    let result;
+    switch (type) {
+      case "buy":
+        result = { color: "green" };
+        break;
+      case "sell":
+        result = { color: "#7b1111" };
+        break;
+    }
+    return result;
   }
 
   render() {
@@ -235,11 +323,7 @@ class ViewsTwo extends React.Component {
             dataArray={this.state.buyOrders}
             renderRow={item =>
               <ListItem>
-                <Text>
-                  {" "}
-                  {JSON.stringify(item)}
-                  {" "}
-                </Text>
+                {this.formatted(item)}
               </ListItem>}
           />
         </Card>
@@ -252,9 +336,7 @@ class ViewsTwo extends React.Component {
             dataArray={this.state.sellOrders}
             renderRow={item =>
               <ListItem>
-                <Text>
-                  {JSON.stringify(item)}
-                </Text>
+                {this.formatted(item)}
               </ListItem>}
           />
         </Card>
@@ -267,13 +349,46 @@ class ViewsTwo extends React.Component {
             dataArray={this.state.tradeHistory}
             renderRow={item =>
               <ListItem>
-                <Text>
-                  {JSON.stringify(item)}
-                </Text>
+                <Body>
+                  <Text>Amount: {item.amount} {this.props.base} </Text>
+                  <Text>Price: {item.rate} {this.props.quote} </Text>
+                  <Text>Total: {item.total} {this.props.quote} </Text>
+                  <Text>Date: {item.date} </Text>
+                </Body>
+                <Right>
+                  <Text style={this.buysell(item.type)}>
+                    {`${item.type.charAt(0).toUpperCase()}${item.type.slice(
+                      1,
+                      item.type.length
+                    )}`}
+                  </Text>
+                </Right>
               </ListItem>}
           />
           <View style={styles.border} />
         </Card>
+
+        <Text style={{ fontSize: 7 }}> Enable realtime order updates</Text>
+        <Text style={{ fontSize: 6, color: "#7b1111" }}>
+          {" "}Warning: Enabling realtime order updates may terminate the
+          functioning of this app.s
+        </Text>
+        <Switch
+          disabled={true}
+          onValueChange={async value => {
+            try {
+              await this.setState({ delayed: value });
+            } catch (error) {
+              console.error(error);
+            }
+            try {
+              await AsyncStorage.setItem("delayed", `${value}`);
+            } catch (error) {
+              console.error(error);
+            }
+          }}
+          value={this.state.delayed}
+        />
       </Container>
     );
   }
@@ -314,4 +429,5 @@ const styles = StyleSheet.create({
 });
 
 //clearinterval
-//appstate
+//prepend
+//total

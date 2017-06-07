@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, TextInput } from "react-native";
+import { StyleSheet, Text, TextInput, WebView } from "react-native";
 import { Container, Header, Content, Button } from "native-base";
 import axios from "axios";
 
@@ -9,7 +9,7 @@ export default class Margin extends React.Component {
   };
 
   componentDidMount() {
-    this.getData('BTC');
+    this.getData("BTC");
   }
 
   getData(currency) {
@@ -41,6 +41,10 @@ export default class Margin extends React.Component {
             maxLength={5}
           />
           <Text style={styles.content}> {this.state.data} </Text>
+          <WebView
+            style={{ height: 900, alignSelf: "stretch" }}
+            source={{ uri: "https://m.poloniex.com/#/marginTrading" }}
+          />
         </Content>
       </Container>
     );

@@ -6,7 +6,8 @@ import {
   WebView,
   Slider,
   Switch,
-  AsyncStorage
+  AsyncStorage,
+  Linking
 } from "react-native";
 import {
   Container,
@@ -149,6 +150,24 @@ export default class Views extends React.Component {
               }}
               style={{ height: 500, alignSelf: "stretch" }}
             />
+            <Text
+              style={{
+                fontSize: 14,
+                color: "blue",
+                textDecorationLine: "underline"
+              }}
+              onPress={e => {
+                Linking.openURL(
+                  `https://bright-element.glitch.me/charts/${this.props
+                    .tickerData.currencyPair}`
+                ).catch(err => {
+                  console.error(err);
+                });
+              }}
+            >
+              {" "}Open in browser
+              {" "}
+            </Text>
           </Card>
           <View style={styles.border} />
 
@@ -202,7 +221,7 @@ class ViewsTwo extends React.Component {
           this.setState({
             buyOrders: this.state.buyOrders.concat([buyOrders])
           });
-        });
+        }); //unshift not concat
         orderChannel.bind("sellorders", sellOrders => {
           this.setState({
             sellOrders: this.state.sellOrders.concat([sellOrders])
@@ -219,8 +238,8 @@ class ViewsTwo extends React.Component {
       )
       .then(responseData => {
         this.setState({
-          sellOrders: responseData.data.bids,
-          buyOrders: responseData.data.asks
+          sellOrders: responseData.data.asks,
+          buyOrders: responseData.data.bids
         });
       });
   }
@@ -258,7 +277,7 @@ class ViewsTwo extends React.Component {
           console.error(error);
         }
         setInterval(() => {
-          // this.refreshTrades(); //to be uncommented
+          //this.refreshTrades(); //to be uncommented
           // this.delayedOrders();
           console.log("refreshed both");
         }, 5000);
@@ -431,3 +450,4 @@ const styles = StyleSheet.create({
 //clearinterval
 //prepend
 //total
+//appstate

@@ -390,7 +390,7 @@ class ViewsTwo extends React.Component {
         <Text style={{ fontSize: 7 }}> Enable realtime order updates</Text>
         <Text style={{ fontSize: 6, color: "#7b1111" }}>
           {" "}Warning: Enabling realtime order updates may terminate the
-          functioning of this app.s
+          functioning of this app.
         </Text>
         <Switch
           disabled={true}
@@ -448,6 +448,6 @@ const styles = StyleSheet.create({
 });
 
 //clearinterval
-//prepend
 //total
 //appstate
+//listview

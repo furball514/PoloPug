@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, RefreshControl } from "react-native";
 import axios from "axios";
 import { Actions } from "react-native-router-flux";
 import {
@@ -30,10 +30,11 @@ export default class Exchangeoverview extends React.Component {
     dataXmr: [],
     dataUsdt: [],
     show: "btc",
-    active: false
+    active: false,
+    refreshing: false
   };
 
-  componentDidMount() {
+  getData() {
     axios.get("https://poloniex.com/public?command=returnTicker").then(data => {
       let pairsData = {
         toBtc: [],
@@ -73,6 +74,24 @@ export default class Exchangeoverview extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.getData();
+  }
+
+  onRefresh() {
+    this.setState({ refreshing: true });
+    async () => {
+      let v;
+      try {
+        v = await this.getData();
+      } catch (error) {
+        console.error(error);
+      }
+      this.setState({ refreshing: false });
+      console.log("refreshed");
+    };
+  }
+
   colorAssign(change) {
     let result;
     switch (change.charAt(0)) {
@@ -108,7 +127,10 @@ export default class Exchangeoverview extends React.Component {
         );
         break;
       default:
-        result = `+${change.replace(change.substr(change.indexOf(".") + 3, change.length), "")}`;
+        result = `+${change.replace(
+          change.substr(change.indexOf(".") + 3, change.length),
+          ""
+        )}`;
         break;
     }
     return result;
@@ -118,10 +140,17 @@ export default class Exchangeoverview extends React.Component {
     return (
       <Container>
         <Container>
-          <Content>
+          <Content
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh()}
+              />
+            }
+          >
             <List
               dataArray={this.show()}
-              renderRow={pair => (
+              renderRow={pair =>
                 <ListItem
                   button
                   onPress={() =>
@@ -168,8 +197,7 @@ export default class Exchangeoverview extends React.Component {
                     </Text>
                     <Icon name="arrow-forward" />
                   </Right>
-                </ListItem>
-              )}
+                </ListItem>}
             />
           </Content>
         </Container>
@@ -223,3 +251,6 @@ export default class Exchangeoverview extends React.Component {
     );
   }
 }
+//refreshcontrol
+//search
+//sort

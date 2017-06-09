@@ -75,3 +75,4 @@ const styles = StyleSheet.create({
 style={styles.web}
 source={{uri:"https://www.poloniex.com/trollbox"}}<Body><Text style={{color:"white"}}>{msg.message}</Text></Body><Right><Text><Text style={{color:"white"}}>{msg.username}</Text><Text style={{color:"white"}}>{msg.reputation}</Text></Text></Right>
 */
+//slacks

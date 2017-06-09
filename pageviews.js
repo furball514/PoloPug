@@ -451,3 +451,5 @@ const styles = StyleSheet.create({
 //total
 //appstate
 //listview
+//top spacing
+//error

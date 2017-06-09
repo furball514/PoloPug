@@ -59,3 +59,7 @@ const styles = StyleSheet.create({
     color: "white"
   }
 });
+
+//input
+//table
+//webview

@@ -810,5 +810,6 @@ export default class Exchangeoverview extends React.Component {
 }
 //refreshcontrol
 //search
-//sort
+//sort //.sort(compare)
 //page views top spacing
+//reverse errors

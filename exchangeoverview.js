@@ -102,7 +102,47 @@ export default class Exchangeoverview extends React.Component {
         dataBtcReverse: pairsData.toBtc.reverse(),
         dataEthReverse: pairsData.toEth.reverse(),
         dataXmrReverse: pairsData.toXmr.reverse(),
-        dataUsdtReverse: pairsData.toUsdt.reverse()
+        dataUsdtReverse: pairsData.toUsdt.reverse(),
+        dataBtcVolume: pairsData.toBtc.sort((a, b) => b.volume - a.volume),
+        dataEthVolume: pairsData.toEth.sort((a, b) => b.volume - a.volume),
+        dataXmrVolume: pairsData.toXmr.sort((a, b) => b.volume - a.volume),
+        dataUsdtVolume: pairsData.toUsdt.sort((a, b) => b.volume - a.volume),
+        dataBtcChange: pairsData.toBtc.sort((a, b) => b.change - a.change),
+        dataEthChange: pairsData.toEth.sort((a, b) => b.change - a.change),
+        dataXmrChange: pairsData.toXmr.sort((a, b) => b.change - a.change),
+        dataUsdtChange: pairsData.toUsdt.sort((a, b) => b.change - a.change),
+        dataBtcPrice: pairsData.toBtc.sort((a, b) => b.price - a.price),
+        dataEthPrice: pairsData.toEth.sort((a, b) => b.price - a.price),
+        dataXmrPrice: pairsData.toXmr.sort((a, b) => b.price - a.price),
+        dataUsdtPrice: pairsData.toUsdt.sort((a, b) => b.price - a.price),
+        dataBtcVolumeReverse: pairsData.toBtc.sort(
+          (a, b) => a.volume - b.volume
+        ),
+        dataEthVolumeReverse: pairsData.toEth.sort(
+          (a, b) => a.volume - b.volume
+        ),
+        dataXmrVolumeReverse: pairsData.toXmr.sort(
+          (a, b) => a.volume - b.volume
+        ),
+        dataUsdtVolumeReverse: pairsData.toUsdt.sort(
+          (a, b) => a.volume - b.volume
+        ),
+        dataBtcChangeReverse: pairsData.toBtc.sort(
+          (a, b) => a.change - b.change
+        ),
+        dataEthChangeReverse: pairsData.toEth.sort(
+          (a, b) => a.change - b.change
+        ),
+        dataXmrChangeReverse: pairsData.toXmr.sort(
+          (a, b) => a.change - b.change
+        ),
+        dataUsdtChangeReverse: pairsData.toUsdt.sort(
+          (a, b) => a.change - b.change
+        ),
+        dataBtcPriceReverse: pairsData.toBtc.sort((a, b) => a.price - b.price),
+        dataEthPriceReverse: pairsData.toEth.sort((a, b) => a.price - b.price),
+        dataXmrPriceReverse: pairsData.toXmr.sort((a, b) => a.price - b.price),
+        dataUsdtPriceReverse: pairsData.toUsdt.sort((a, b) => a.price - b.price)
       });
     });
   }

@@ -449,7 +449,6 @@ const styles = StyleSheet.create({
 
 //clearinterval
 //total
-//appstate
 //listview
 //top spacing
 //props[register]

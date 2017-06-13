@@ -205,7 +205,9 @@ class ViewsTwo extends React.Component {
     buyOrders: [],
     sellOrders: [],
     tradeHistory: [],
-    delayed: true
+    delayed: true,
+    sellOrdersTotal: Number,
+    buyOrdersTotals: Number
   };
 
   realtimeOrders() {
@@ -234,12 +236,25 @@ class ViewsTwo extends React.Component {
     axios
       .get(
         `https://poloniex.com/public?command=returnOrderBook&currencyPair=${this
-          .props.pair}`
+          .props.pair}&depth=3400`
       )
       .then(responseData => {
+        let asksArr = [];
+        let bidsArr = [];
+        let askRate;
+        responseData.data.asks.map((ask, key) => {
+          asksArr.push(ask[0] * ask[1]);
+          askRate = ask[0];
+        });
+        responseData.data.bids.map((bid, key) => {
+          bidsArr.push(bid[0] * bid[1]);
+        });
+
         this.setState({
           sellOrders: responseData.data.asks,
-          buyOrders: responseData.data.bids
+          buyOrders: responseData.data.bids,
+          sellOrdersTotal: asksArr.reduce((a, b) => a + b) / askRate,
+          buyOrdersTotals: bidsArr.reduce((c, d) => c + d)
         });
       });
   }
@@ -278,7 +293,7 @@ class ViewsTwo extends React.Component {
         }
         setInterval(() => {
           //this.refreshTrades(); //to be uncommented
-          // this.delayedOrders();
+          this.delayedOrders();
           console.log("refreshed both");
         }, 5000);
         break;
@@ -337,6 +352,10 @@ class ViewsTwo extends React.Component {
       <Container>
         <Card>
           <H3> BUY ORDERS </H3>
+          <Text style={{ fontSize: 15 }}>
+            {" "}Total: {this.state.buyOrdersTotals} {this.props.quote}
+            {" "}
+          </Text>
           <List
             style={{ height: 500 }}
             dataArray={this.state.buyOrders}
@@ -350,6 +369,10 @@ class ViewsTwo extends React.Component {
 
         <Card>
           <H3> SELL ORDERS </H3>
+          <Text style={{ fontSize: 15 }}>
+            {" "}Total: {this.state.sellOrdersTotal} {this.props.base}
+            {" "}
+          </Text>
           <List
             style={{ height: 500 }}
             dataArray={this.state.sellOrders}

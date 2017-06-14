@@ -1,6 +1,6 @@
 import React from "react";
 import Pusher from "pusher-js/react-native";
-import Views from "./pageviews";
+import { Views } from "./pageviews";
 import axios from "axios";
 import { AppState } from "react-native";
 

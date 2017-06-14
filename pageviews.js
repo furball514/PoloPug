@@ -24,8 +24,9 @@ import {
 } from "native-base";
 import Pusher from "pusher-js/react-native";
 import axios from "axios";
+import { Actions } from "react-native-router-flux";
 
-export default class Views extends React.Component {
+export class Views extends React.Component {
   roundOffChange() {
     let change = this.props.tickerData.percentChange;
     let result;
@@ -175,6 +176,7 @@ export default class Views extends React.Component {
             pair={this.props.tickerData.currencyPair}
             base={this.props.base}
             quote={this.props.quote}
+            rate={this.props.last}
           />
 
           <Footer
@@ -253,7 +255,7 @@ class ViewsTwo extends React.Component {
         this.setState({
           sellOrders: responseData.data.asks,
           buyOrders: responseData.data.bids,
-          sellOrdersTotal: asksArr.reduce((a, b) => a + b) / askRate,
+          sellOrdersTotal: asksArr.reduce((a, b) => a + b),
           buyOrdersTotals: bidsArr.reduce((c, d) => c + d)
         });
       });
@@ -293,7 +295,7 @@ class ViewsTwo extends React.Component {
         }
         setInterval(() => {
           //this.refreshTrades(); //to be uncommented
-          this.delayedOrders();
+          //this.delayedOrders();
           console.log("refreshed both");
         }, 5000);
         break;
@@ -357,37 +359,72 @@ class ViewsTwo extends React.Component {
             {" "}
           </Text>
           <List
-            style={{ height: 500 }}
             dataArray={this.state.buyOrders}
             renderRow={item =>
               <ListItem>
                 {this.formatted(item)}
               </ListItem>}
           />
+          <Text
+            style={{
+              color: "blue",
+              fontSize: 14,
+              textDecorationLine: "underline"
+            }}
+            onPress={() => {
+              Actions.bo({
+                buyOrders: this.state.buyOrders,
+                quote: this.props.quote,
+                buyOrdersTotals: this.state.buyOrdersTotals,
+                formatted: this.formatted,
+                delayed: this.state.delayed
+              });
+            }}
+          >
+            {" "}See More
+            {" "}
+          </Text>
         </Card>
         <View style={styles.border} />
 
         <Card>
           <H3> SELL ORDERS </H3>
           <Text style={{ fontSize: 15 }}>
-            {" "}Total: {this.state.sellOrdersTotal} {this.props.base}
+            {" "}Total: {this.state.sellOrdersTotal} {this.props.quote}
             {" "}
           </Text>
           <List
-            style={{ height: 500 }}
             dataArray={this.state.sellOrders}
             renderRow={item =>
               <ListItem>
                 {this.formatted(item)}
               </ListItem>}
           />
+          <Text
+            style={{
+              color: "blue",
+              fontSize: 14,
+              textDecorationLine: "underline"
+            }}
+            onPress={() => {
+              Actions.so({
+                sellOrders: this.state.sellOrders,
+                quote: this.props.quote,
+                sellOrdersTotals: this.state.sellOrdersTotals,
+                formatted: this.formatted,
+                delayed: this.state.delayed
+              });
+            }}
+          >
+            {" "}See More
+            {" "}
+          </Text>
         </Card>
         <View style={styles.border} />
 
         <Card>
           <H3> MARKET HISTORY </H3>
           <List
-            style={{ height: 500 }}
             dataArray={this.state.tradeHistory}
             renderRow={item =>
               <ListItem>
@@ -407,6 +444,24 @@ class ViewsTwo extends React.Component {
                 </Right>
               </ListItem>}
           />
+          <Text
+            style={{
+              color: "blue",
+              fontSize: 14,
+              textDecorationLine: "underline"
+            }}
+            onPress={() => {
+              Actions.mk({
+                tradeHistory: this.state.tradeHistory,
+                quote: this.props.quote,
+                base: this.props.base,
+                buysell: this.buysell
+              });
+            }}
+          >
+            {" "}See More
+            {" "}
+          </Text>
           <View style={styles.border} />
         </Card>
 
@@ -431,6 +486,92 @@ class ViewsTwo extends React.Component {
           }}
           value={this.state.delayed}
         />
+      </Container>
+    );
+  }
+}
+
+export class So extends React.Component {
+  state = {
+    delayed: this.props.delayed
+  };
+
+  render() {
+    return (
+      <Container>
+        <Content>
+          <H3> SELL ORDERS </H3>
+          <Text style={{ fontSize: 15 }}>
+            {" "}Total: {this.props.sellOrdersTotals} {this.props.quote}
+            {" "}
+          </Text>
+          <List
+            dataArray={this.props.sellOrders}
+            renderRow={item =>
+              <ListItem>
+                {this.props.formatted(item)}
+              </ListItem>}
+          />
+        </Content>
+      </Container>
+    );
+  }
+}
+
+export class Bo extends React.Component {
+  state = {
+    delayed: this.props.delayed
+  };
+
+  render() {
+    return (
+      <Container>
+        <Content>
+          <H3> BUY ORDERS </H3>
+          <Text style={{ fontSize: 15 }}>
+            {" "}Total: {this.props.buyOrdersTotals} {this.props.quote}
+            {" "}
+          </Text>
+          <List
+            dataArray={this.props.buyOrders}
+            renderRow={item =>
+              <ListItem>
+                {this.props.formatted(item)}
+              </ListItem>}
+          />
+        </Content>
+      </Container>
+    );
+  }
+}
+
+export class Mk extends React.Component {
+  render() {
+    return (
+      <Container>
+        <Content>
+          <H3> MARKET HISTORY </H3>
+          <List
+            dataArray={this.props.tradeHistory}
+            renderRow={item =>
+              <ListItem>
+                <Body>
+                  <Text>Amount: {item.amount} {this.props.base} </Text>
+                  <Text>Price: {item.rate} {this.props.quote} </Text>
+                  <Text>Total: {item.total} {this.props.quote} </Text>
+                  <Text>Date: {item.date} </Text>
+                </Body>
+                <Right>
+                  <Text style={this.props.buysell(item.type)}>
+                    {`${item.type.charAt(0).toUpperCase()}${item.type.slice(
+                      1,
+                      item.type.length
+                    )}`}
+                  </Text>
+                </Right>
+              </ListItem>}
+          />
+        </Content>
       </Container>
     );
   }
@@ -471,7 +612,10 @@ const styles = StyleSheet.create({
 });
 
 //clearinterval
-//total
+//total //inaccurate
 //listview/container/component
-//top spacing
+//top spacing in all comps
 //props[register]
+//interchange
+//color lists
+//space lists

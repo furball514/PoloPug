@@ -9,10 +9,13 @@ import {
   Right,
   Header,
   Icon,
-  Button
+  Button,
+  Footer,
+  FooterTab
 } from "native-base";
 import axios from "axios";
 import { Actions } from "react-native-router-flux";
+import Loading from "./loading";
 
 export class Troll extends React.Component {
   state = {
@@ -50,49 +53,12 @@ export class Troll extends React.Component {
             TrollBox has been disabled by Poloniex
           </Text>
         </Header>
+        <Text>{"   "}</Text>
         <Content>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-around"
-            }}
-          >
-            <Button
-              onPress={e => {
-                Linking.openURL(
-                  "https://join.slack.com/trollboxonepoloniex/shared_invite/MTk0ODg2MzI2MzIyLTE0OTY5NDE4ODMtYTBmMDBhZmNmMg"
-                ).catch(err => {
-                  console.error(err);
-                });
-              }}
-            >
-              <Icon name="navigate" />
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: "lightblue"
-                }}
-              >
-                Slack Invite
-              </Text>
-            </Button>
-            <Button
-              onPress={() => {
-                Actions.troll();
-              }}
-            >
-              <Icon name="chatboxes" />
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: "lightblue"
-                }}
-              >
-                Sign In
-              </Text>
-            </Button>
-          </View>
+          <Text style={{ color: "white", alignSelf: "center" }}>
+            {" "}trollboxonepoloniex @slack.com
+          </Text>
+          <View style={{ borderBottomWidth: 1, borderBottomColor: "white" }} />
           <View>
             <List
               dataArray={this.state.data}
@@ -105,6 +71,55 @@ export class Troll extends React.Component {
             />
           </View>
         </Content>
+        <View
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: "white",
+            marginBottom: 2
+          }}
+        />
+        <View>
+          <Footer>
+            <FooterTab>
+              <Button
+                vertical
+                onPress={e => {
+                  Linking.openURL(
+                    "https://join.slack.com/trollboxonepoloniex/shared_invite/MTk0ODg2MzI2MzIyLTE0OTY5NDE4ODMtYTBmMDBhZmNmMg"
+                  ).catch(err => {
+                    console.error(err);
+                  });
+                }}
+              >
+                <Icon name="navigate" />
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: "lightblue"
+                  }}
+                >
+                  Slack Invite
+                </Text>
+              </Button>
+              <Button
+                vertical
+                onPress={() => {
+                  Actions.troll();
+                }}
+              >
+                <Icon name="chatboxes" />
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: "lightblue"
+                  }}
+                >
+                  Sign In
+                </Text>
+              </Button>
+            </FooterTab>
+          </Footer>
+        </View>
       </Container>
     );
   }
@@ -122,8 +137,27 @@ export class TrollSigned extends React.Component {
           source={{
             uri: "https://trollboxonepoloniex.slack.com/messages"
           }}
-          style={{ height: 500, alignSelf: "stretch" }}
+          renderLoading={() => <Loading />}
+          userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+          style={{ height: 900, alignSelf: "stretch" }}
         />
+        <Text
+          style={{
+            fontSize: 14,
+            color: "blue",
+            textDecorationLine: "underline"
+          }}
+          onPress={e => {
+            Linking.openURL(
+              "https://trollboxonepoloniex.slack.com/messages"
+            ).catch(err => {
+              console.error(err);
+            });
+          }}
+        >
+          {" "}Open in browser
+          {" "}
+        </Text>
       </Container>
     );
     const signedOut = (
@@ -147,6 +181,7 @@ export class TrollSigned extends React.Component {
           source={{
             uri: "https://trollboxonepoloniex.slack.com/"
           }}
+          renderLoading={() => <Loading />}
           style={{ height: 500, alignSelf: "stretch" }}
         />
       </Container>
@@ -167,6 +202,16 @@ const styles = StyleSheet.create({
 <WebView
 style={styles.web}
 source={{uri:"https://www.poloniex.com/trollbox"}}<Body><Text style={{color:"white"}}>{msg.message}</Text></Body><Right><Text><Text style={{color:"white"}}>{msg.username}</Text><Text style={{color:"white"}}>{msg.reputation}</Text></Text></Right>
+
+  <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-around"
+                }}
+              >
 */
 //slacks
 //useragent
+//loading
+//layout

@@ -27,6 +27,7 @@ import {
 import Pusher from "pusher-js/react-native";
 import axios from "axios";
 import { Actions } from "react-native-router-flux";
+import Loading from "./loading";
 
 export class Views extends React.Component {
   roundOffChange() {
@@ -152,6 +153,7 @@ export class Views extends React.Component {
                 uri: `https://bright-element.glitch.me/charts/${this.props
                   .tickerData.currencyPair}`
               }}
+              renderLoading={() => <Loading />}
               style={{ height: 500, alignSelf: "stretch" }}
             />
             <Text

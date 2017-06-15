@@ -20,7 +20,9 @@ import {
   List,
   ListItem,
   Footer,
-  H3
+  H3,
+  Button,
+  Icon
 } from "native-base";
 import Pusher from "pusher-js/react-native";
 import axios from "axios";
@@ -73,6 +75,7 @@ export class Views extends React.Component {
       <Container>
         <Content>
           <Card>
+            <Text>{"    "}</Text>
             <CardItem header>
               <Left />
               <Body>
@@ -209,7 +212,8 @@ class ViewsTwo extends React.Component {
     tradeHistory: [],
     delayed: true,
     sellOrdersTotal: Number,
-    buyOrdersTotals: Number
+    buyOrdersTotals: Number,
+    mountBuyFirst: true
   };
 
   realtimeOrders() {
@@ -317,19 +321,20 @@ class ViewsTwo extends React.Component {
 
   formatted(item) {
     let result;
+    /*
     switch (this.state.delayed) {
-      case true:
-        result = (
-          <Body>
-            <Text>Amount: {item[1]} {this.props.base}</Text>
-            <Text note>Price: {item[0]} {this.props.quote}</Text>
-          </Body>
-        );
+      case true:*/
+    result = (
+      <Body>
+        <Text>Amount: {item[1]} {this.props.base}</Text>
+        <Text note>Price: {item[0]} {this.props.quote}</Text>
+      </Body>
+    ); /*
         break;
       case false:
         result = JSON.stringify(item);
         break;
-    }
+    }*/
     return result;
   }
 
@@ -347,10 +352,7 @@ class ViewsTwo extends React.Component {
   }
 
   render() {
-    console.log(`buy: ${this.state.buyOrders.length}`);
-    console.log(`sell: ${this.state.sellOrders.length}`);
-    console.log(`trade: ${this.state.tradeHistory.length}`);
-    return (
+    const buyFirst = (
       <Container>
         <Card>
           <H3> BUY ORDERS </H3>
@@ -374,6 +376,7 @@ class ViewsTwo extends React.Component {
             onPress={() => {
               Actions.bo({
                 buyOrders: this.state.buyOrders,
+                base: this.props.base,
                 quote: this.props.quote,
                 buyOrdersTotals: this.state.buyOrdersTotals,
                 formatted: this.formatted,
@@ -386,6 +389,22 @@ class ViewsTwo extends React.Component {
           </Text>
         </Card>
         <View style={styles.border} />
+
+        <Button
+          light
+          style={{ alignSelf: "center" }}
+          onPress={() => {
+            const buy = () => {
+              this.setState({ mountBuyFirst: true });
+            };
+            const sell = () => {
+              this.setState({ mountBuyFirst: false });
+            };
+            this.state.mountBuyFirst ? sell() : buy();
+          }}
+        >
+          <Icon name="shuffle" />
+        </Button>
 
         <Card>
           <H3> SELL ORDERS </H3>
@@ -409,6 +428,7 @@ class ViewsTwo extends React.Component {
             onPress={() => {
               Actions.so({
                 sellOrders: this.state.sellOrders,
+                base: this.props.base,
                 quote: this.props.quote,
                 sellOrdersTotals: this.state.sellOrdersTotals,
                 formatted: this.formatted,
@@ -488,6 +508,168 @@ class ViewsTwo extends React.Component {
         />
       </Container>
     );
+
+    const sellFirst = (
+      <Container>
+        <Card>
+          <H3> SELL ORDERS </H3>
+          <Text style={{ fontSize: 15 }}>
+            {" "}Total: {this.state.sellOrdersTotal} {this.props.quote}
+            {" "}
+          </Text>
+          <List
+            dataArray={this.state.sellOrders}
+            renderRow={item =>
+              <ListItem>
+                {this.formatted(item)}
+              </ListItem>}
+          />
+          <Text
+            style={{
+              color: "blue",
+              fontSize: 14,
+              textDecorationLine: "underline"
+            }}
+            onPress={() => {
+              Actions.so({
+                sellOrders: this.state.sellOrders,
+                base: this.props.base,
+                quote: this.props.quote,
+                sellOrdersTotals: this.state.sellOrdersTotals,
+                formatted: this.formatted,
+                delayed: this.state.delayed
+              });
+            }}
+          >
+            {" "}See More
+            {" "}
+          </Text>
+        </Card>
+        <View style={styles.border} />
+
+        <Button
+          light
+          style={{ alignSelf: "center" }}
+          onPress={() => {
+            const buy = () => {
+              this.setState({ mountBuyFirst: true });
+            };
+            const sell = () => {
+              this.setState({ mountBuyFirst: false });
+            };
+            this.state.mountBuyFirst ? sell() : buy();
+          }}
+        >
+          <Icon name="shuffle" />
+        </Button>
+
+        <Card>
+          <H3> BUY ORDERS </H3>
+          <Text style={{ fontSize: 15 }}>
+            {" "}Total: {this.state.buyOrdersTotals} {this.props.quote}
+            {" "}
+          </Text>
+          <List
+            dataArray={this.state.buyOrders}
+            renderRow={item =>
+              <ListItem>
+                {this.formatted(item)}
+              </ListItem>}
+          />
+          <Text
+            style={{
+              color: "blue",
+              fontSize: 14,
+              textDecorationLine: "underline"
+            }}
+            onPress={() => {
+              Actions.bo({
+                buyOrders: this.state.buyOrders,
+                base: this.props.base,
+                quote: this.props.quote,
+                buyOrdersTotals: this.state.buyOrdersTotals,
+                formatted: this.formatted,
+                delayed: this.state.delayed
+              });
+            }}
+          >
+            {" "}See More
+            {" "}
+          </Text>
+        </Card>
+        <View style={styles.border} />
+
+        <Card>
+          <H3> MARKET HISTORY </H3>
+          <List
+            dataArray={this.state.tradeHistory}
+            renderRow={item =>
+              <ListItem>
+                <Body>
+                  <Text>Amount: {item.amount} {this.props.base} </Text>
+                  <Text>Price: {item.rate} {this.props.quote} </Text>
+                  <Text>Total: {item.total} {this.props.quote} </Text>
+                  <Text>Date: {item.date} </Text>
+                </Body>
+                <Right>
+                  <Text style={this.buysell(item.type)}>
+                    {`${item.type.charAt(0).toUpperCase()}${item.type.slice(
+                      1,
+                      item.type.length
+                    )}`}
+                  </Text>
+                </Right>
+              </ListItem>}
+          />
+          <Text
+            style={{
+              color: "blue",
+              fontSize: 14,
+              textDecorationLine: "underline"
+            }}
+            onPress={() => {
+              Actions.mk({
+                tradeHistory: this.state.tradeHistory,
+                quote: this.props.quote,
+                base: this.props.base,
+                buysell: this.buysell
+              });
+            }}
+          >
+            {" "}See More
+            {" "}
+          </Text>
+          <View style={styles.border} />
+        </Card>
+
+        <Text style={{ fontSize: 7 }}> Enable realtime order updates</Text>
+        <Text style={{ fontSize: 6, color: "#7b1111" }}>
+          {" "}Warning: Enabling realtime order updates may terminate the
+          functioning of this app.
+        </Text>
+        <Switch
+          disabled={true}
+          onValueChange={async value => {
+            try {
+              await this.setState({ delayed: value });
+            } catch (error) {
+              console.error(error);
+            }
+            try {
+              await AsyncStorage.setItem("delayed", `${value}`);
+            } catch (error) {
+              console.error(error);
+            }
+          }}
+          value={this.state.delayed}
+        />
+      </Container>
+    );
+    console.log(`buy: ${this.state.buyOrders.length}`);
+    console.log(`sell: ${this.state.sellOrders.length}`);
+    console.log(`trade: ${this.state.tradeHistory.length}`);
+    let mountBuyFirst = this.state.mountBuyFirst ? buyFirst : sellFirst;
+    return mountBuyFirst;
   }
 }
 
@@ -500,16 +682,27 @@ export class So extends React.Component {
     return (
       <Container>
         <Content>
-          <H3> SELL ORDERS </H3>
-          <Text style={{ fontSize: 15 }}>
+          <Text>{"  "}</Text>
+          <Text>{"  "}</Text>
+          <Text>{"  "}</Text>
+          <H3 style={{ color: "#e39706" }}> SELL ORDERS </H3>
+          <Text style={{ color: "#e39706", fontSize: 15 }}>
             {" "}Total: {this.props.sellOrdersTotals} {this.props.quote}
             {" "}
           </Text>
           <List
+            style={{ backgroundColor: "#06474b" }}
             dataArray={this.props.sellOrders}
             renderRow={item =>
               <ListItem>
-                {this.props.formatted(item)}
+                <Body>
+                  <Text style={{ color: "white" }}>
+                    Amount: {item[1]} {this.props.base}
+                  </Text>
+                  <Text style={{ color: "white" }} note>
+                    Price: {item[0]} {this.props.quote}
+                  </Text>
+                </Body>
               </ListItem>}
           />
         </Content>
@@ -527,16 +720,27 @@ export class Bo extends React.Component {
     return (
       <Container>
         <Content>
-          <H3> BUY ORDERS </H3>
-          <Text style={{ fontSize: 15 }}>
+          <Text>{"   "}</Text>
+          <Text>{"   "}</Text>
+          <Text>{"   "}</Text>
+          <H3 style={{ color: "#e39706" }}> BUY ORDERS </H3>
+          <Text style={{ color: "#e39706", fontSize: 15 }}>
             {" "}Total: {this.props.buyOrdersTotals} {this.props.quote}
             {" "}
           </Text>
           <List
+            style={{ backgroundColor: "#06474b" }}
             dataArray={this.props.buyOrders}
             renderRow={item =>
               <ListItem>
-                {this.props.formatted(item)}
+                <Body>
+                  <Text style={{ color: "white" }}>
+                    Amount: {item[1]} {this.props.base}
+                  </Text>
+                  <Text style={{ color: "white" }} note>
+                    Price: {item[0]} {this.props.quote}
+                  </Text>
+                </Body>
               </ListItem>}
           />
         </Content>
@@ -550,7 +754,10 @@ export class Mk extends React.Component {
     return (
       <Container>
         <Content>
-          <H3> MARKET HISTORY </H3>
+          <Text>{"   "}</Text>
+          <Text>{"   "}</Text>
+          <Text>{"   "}</Text>
+          <H3 style={{ color: "#e39706" }}> MARKET HISTORY </H3>
           <List
             dataArray={this.props.tradeHistory}
             renderRow={item =>
@@ -616,6 +823,4 @@ const styles = StyleSheet.create({
 //listview/container/component
 //top spacing in all comps
 //props[register]
-//interchange
-//color lists
-//space lists
+//sellorder totals

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Linking, View, WebView } from "react-native";
 import {
   Container,
   Content,
@@ -7,11 +7,14 @@ import {
   ListItem,
   Body,
   Right,
-  Header
+  Header,
+  Icon,
+  Button
 } from "native-base";
 import axios from "axios";
+import { Actions } from "react-native-router-flux";
 
-export default class Troll extends React.Component {
+export class Troll extends React.Component {
   state = {
     data: []
   };
@@ -48,18 +51,108 @@ export default class Troll extends React.Component {
           </Text>
         </Header>
         <Content>
-          <List
-            dataArray={this.state.data}
-            renderRow={msg =>
-              <ListItem>
-                <Text style={{color: "white"}}>
-                  {JSON.stringify(msg)}
-                </Text>
-              </ListItem>}
-          />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-around"
+            }}
+          >
+            <Button
+              onPress={e => {
+                Linking.openURL(
+                  "https://join.slack.com/trollboxonepoloniex/shared_invite/MTk0ODg2MzI2MzIyLTE0OTY5NDE4ODMtYTBmMDBhZmNmMg"
+                ).catch(err => {
+                  console.error(err);
+                });
+              }}
+            >
+              <Icon name="navigate" />
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: "lightblue"
+                }}
+              >
+                Slack Invite
+              </Text>
+            </Button>
+            <Button
+              onPress={() => {
+                Actions.troll();
+              }}
+            >
+              <Icon name="chatboxes" />
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: "lightblue"
+                }}
+              >
+                Sign In
+              </Text>
+            </Button>
+          </View>
+          <View>
+            <List
+              dataArray={this.state.data}
+              renderRow={msg =>
+                <ListItem>
+                  <Text style={{ color: "white" }}>
+                    {JSON.stringify(msg)}
+                  </Text>
+                </ListItem>}
+            />
+          </View>
         </Content>
       </Container>
     );
+  }
+}
+
+export class TrollSigned extends React.Component {
+  state = {
+    signedIn: false
+  };
+
+  render() {
+    const signedIn = (
+      <Container>
+        <WebView
+          source={{
+            uri: "https://trollboxonepoloniex.slack.com/messages"
+          }}
+          style={{ height: 500, alignSelf: "stretch" }}
+        />
+      </Container>
+    );
+    const signedOut = (
+      <Container>
+        <Text>{"   "}</Text>
+        <Text>{"   "}</Text>
+        <Text
+          style={{
+            fontSize: 14,
+            color: "blue",
+            textDecorationLine: "underline"
+          }}
+          onPress={() => {
+            this.setState({ signedIn: true });
+          }}
+        >
+          {" "}Go To Chatbox
+          {" "}
+        </Text>
+        <WebView
+          source={{
+            uri: "https://trollboxonepoloniex.slack.com/"
+          }}
+          style={{ height: 500, alignSelf: "stretch" }}
+        />
+      </Container>
+    );
+    let renderWhich = this.state.signedIn ? signedIn : signedOut;
+    return renderWhich;
   }
 }
 
@@ -76,3 +169,4 @@ style={styles.web}
 source={{uri:"https://www.poloniex.com/trollbox"}}<Body><Text style={{color:"white"}}>{msg.message}</Text></Body><Right><Text><Text style={{color:"white"}}>{msg.username}</Text><Text style={{color:"white"}}>{msg.reputation}</Text></Text></Right>
 */
 //slacks
+//useragent

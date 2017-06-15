@@ -76,15 +76,3 @@ export default class Page extends React.Component {
   }
 }
 
-/*
-        <View
-        style={{
-          flex: 1,
-          backgroundColor: "#fff",
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
-        <Text> {JSON.stringify(this.state.tickerData)} </Text>
-      </View>
-      */

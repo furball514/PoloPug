@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, WebView } from "react-native";
 import {
   Container,
   Header,
@@ -12,23 +12,25 @@ import {
   Body
 } from "native-base";
 import axios from "axios";
+import Loading from "./loading";
 
 export default class Margin extends React.Component {
   state = {
-    data: [],
+    offers: Array,
+    demands: Array,
     text: "BTC"
   };
 
   getData() {
     axios
       .get(
-        `https://poloniex.com/public?command=returnLoanOrders&currency=${encodeURIComponent(
-          this.state.text
-        )}`
+        `https://poloniex.com/public?command=returnLoanOrders&currency=${this
+          .state.text}`
       )
       .then(data => {
         this.setState({
-          data: data.data
+          offers: data.data.offers,
+          demands: data.data.demands
         });
       });
   }
@@ -43,11 +45,11 @@ export default class Margin extends React.Component {
         <Header style={{ backgroundColor: "yellow" }}>
           <Text style={styles.text}> Coming Soon </Text>
         </Header>
-        <Content>
+        <Content style={{ marginTop: 10 }}>
           <Item rounded>
             <Input
               style={{ color: "white" }}
-              placeholder="Enter Currency Pair"
+              placeholder="Enter Currency Code"
               placeholderTextColor="white"
               maxLength={5}
               autoCapitalize="characters"
@@ -59,50 +61,117 @@ export default class Margin extends React.Component {
               returnKeyType="go"
             />
           </Item>
-          <H3 style={{ color: "white" }}> OFFERS </H3>
+          <H3
+            style={{
+              color: "white",
+              textDecorationLine: "underline",
+              marginLeft: 10,
+              marginTop: 10
+            }}
+          >
+            {" "}OFFERS
+            {" "}
+          </H3>
           <List
-            dataArray={this.state.data.offers}
+            style={{ marginTop: 5 }}
+            dataArray={this.state.offers}
             renderHeader={() =>
-              <Text style={{ flexDirection: "row" }}>
-                <Text style={{ flex: 1 }}> Rate </Text>
-                <Text style={{ flex: 1 }}> Amount </Text>
-                <Text style={{ flex: 1 }}> RangeMin </Text>
-                <Text style={{ flex: 1 }}> RangeMax </Text>
+              <Text
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 10
+                }}
+              >
+                <Text style={{ flex: 1, color: "lightblue" }}> Rate </Text>
+                <Text style={{ flex: 1, color: "lightblue" }}> Amount </Text>
+                <Text style={{ flex: 1, color: "lightblue" }}> RangeMin </Text>
+                <Text style={{ flex: 1, color: "lightblue" }}> RangeMax </Text>
               </Text>}
-            renderRow={offer => {
+            renderRow={offer =>
               <ListItem>
                 <Body>
-                  <Text style={styles.content}>
-                    {offer.rate}
+                  <Text
+                    style={{
+                      flexDirection: "row"
+                    }}
+                  >
+                    <Text style={{ flex: 1, color: "white", fontSize: 15 }}>
+                      {offer.rate}
+                    </Text>
+                    <Text>{"   "}</Text>
+                    <Text style={{ flex: 1, color: "white", fontSize: 15 }}>
+                      {offer.amount}
+                    </Text>
+                    <Text>{"   "}</Text>
+                    <Text style={{ flex: 1, color: "white", fontSize: 15 }}>
+                      {offer.rangeMin}
+                    </Text>
+                    <Text>{"   "}</Text>
+                    <Text style={{ flex: 1, color: "white", fontSize: 15 }}>
+                      {offer.rangeMax}
+                    </Text>
                   </Text>
                 </Body>
-              </ListItem>;
-            }}
+              </ListItem>}
           />
-          <H3 style={{ color: "white" }}> DEMANDS </H3>
+          <Text>{" "}</Text>
+          <H3
+            style={{
+              color: "white",
+              textDecorationLine: "underline",
+              marginLeft: 10
+            }}
+          >
+            {" "}DEMANDS
+            {" "}
+          </H3>
           <List
-            dataArray={this.state.data.demands}
+            style={{ marginTop: 5 }}
+            dataArray={this.state.demands}
             renderHeader={() =>
-              <Text style={{ flexDirection: "row" }}>
-                <Text style={{ flex: 1 }}> Rate </Text>
-                <Text style={{ flex: 1 }}> Amount </Text>
-                <Text style={{ flex: 1 }}> RangeMin </Text>
-                <Text style={{ flex: 1 }}> RangeMax </Text>
+              <Text
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 10
+                }}
+              >
+                <Text style={{ flex: 1, color: "lightblue" }}> Rate </Text>
+                <Text style={{ flex: 1, color: "lightblue" }}> Amount </Text>
+                <Text style={{ flex: 1, color: "lightblue" }}> RangeMin </Text>
+                <Text style={{ flex: 1, color: "lightblue" }}> RangeMax </Text>
               </Text>}
-            renderRow={demand => {
+            renderRow={demand =>
               <ListItem>
                 <Body>
-                  <Text style={styles.content}>
-                    {demand.rate}
+                  <Text
+                    style={{
+                      flexDirection: "row"
+                    }}
+                  >
+                    <Text style={{ flex: 1, color: "white", fontSize: 15 }}>
+                      {demand.rate}
+                    </Text>
+                    <Text>{"   "}</Text>
+                    <Text style={{ flex: 1, color: "white", fontSize: 15 }}>
+                      {demand.amount}
+                    </Text>
+                    <Text>{"   "}</Text>
+                    <Text style={{ flex: 1, color: "white", fontSize: 15 }}>
+                      {demand.rangeMin}
+                    </Text>
+                    <Text>{"   "}</Text>
+                    <Text style={{ flex: 1, color: "white", fontSize: 15 }}>
+                      {demand.rangeMax}
+                    </Text>
                   </Text>
                 </Body>
-              </ListItem>;
-            }}
+              </ListItem>}
           />
-          {/*<WebView
-            style={{ height: 900, alignSelf: "stretch" }}
+          <WebView
+            style={{ height: 1500, alignSelf: "stretch" }}
             source={{ uri: "https://m.poloniex.com/#/marginTrading" }}
-          />*/}
+            renderLoading={() => <Loading />}
+          />
         </Content>
       </Container>
     );

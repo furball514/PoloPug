@@ -12,7 +12,9 @@ import {
   Body,
   Button,
   Fab,
-  Thumbnail
+  Thumbnail,
+  Input,
+  Item
 } from "native-base";
 
 /**
@@ -60,7 +62,8 @@ export default class Exchangeoverview extends React.Component {
     dataBtcChangeReverse: [],
     dataEthChangeReverse: [],
     dataXmrChangeReverse: [],
-    dataUsdtChangeReverse: []
+    dataUsdtChangeReverse: [],
+    text: ""
   };
 
   getData() {
@@ -265,11 +268,459 @@ export default class Exchangeoverview extends React.Component {
     return result;
   }
 
+  reverseSort() {
+    switch (this.state.show) {
+      case "btc":
+        this.setState({ show: "btcReverse" });
+        break;
+      case "xmr":
+        this.setState({ show: "xmrReverse" });
+        break;
+      case "eth":
+        this.setState({ show: "ethReverse" });
+        break;
+      case "usdt":
+        this.setState({ show: "usdtReverse" });
+        break;
+
+      case "btcVolume":
+        this.setState({ show: "btcVolumeReverse" });
+        break;
+      case "xmrVolume":
+        this.setState({ show: "xmrVolumeReverse" });
+        break;
+      case "ethVolume":
+        this.setState({ show: "ethVolumeReverse" });
+        break;
+      case "usdtVolume":
+        this.setState({ show: "usdtVolumeReverse" });
+        break;
+
+      case "btcChange":
+        this.setState({ show: "btcChangeReverse" });
+        break;
+      case "xmrChange":
+        this.setState({ show: "xmrChangeReverse" });
+        break;
+      case "ethChange":
+        this.setState({ show: "ethChangeReverse" });
+        break;
+      case "usdtChange":
+        this.setState({ show: "usdtChangeReverse" });
+        break;
+
+      case "btcPrice":
+        this.setState({ show: "btcPriceReverse" });
+        break;
+      case "xmrPrice":
+        this.setState({ show: "xmrPriceReverse" });
+        break;
+      case "ethPrice":
+        this.setState({ show: "ethPriceReverse" });
+        break;
+      case "usdtPrice":
+        this.setState({ show: "usdtPriceReverse" });
+        break;
+
+      case "btcReverse":
+        this.setState({ show: "btc" });
+        break;
+      case "xmrReverse":
+        this.setState({ show: "xmr" });
+        break;
+      case "ethReverse":
+        this.setState({ show: "eth" });
+        break;
+      case "usdtReverse":
+        this.setState({ show: "usdt" });
+        break;
+
+      case "btcVolumeReverse":
+        this.setState({ show: "btcVolume" });
+        break;
+      case "xmrVolumeReverse":
+        this.setState({ show: "xmrVolume" });
+        break;
+      case "ethVolumeReverse":
+        this.setState({ show: "ethVolume" });
+        break;
+      case "usdtVolumeReverse":
+        this.setState({ show: "usdtVolume" });
+        break;
+
+      case "btcChangeReverse":
+        this.setState({ show: "btcChange" });
+        break;
+      case "xmrChangeReverse":
+        this.setState({ show: "xmrChange" });
+        break;
+      case "ethChangeReverse":
+        this.setState({ show: "ethChange" });
+        break;
+      case "usdtChangeReverse":
+        this.setState({ show: "usdtChange" });
+        break;
+
+      case "btcPriceReverse":
+        this.setState({ show: "btcPrice" });
+        break;
+      case "xmrPriceReverse":
+        this.setState({ show: "xmrPrice" });
+        break;
+      case "ethPriceReverse":
+        this.setState({ show: "ethPrice" });
+        break;
+      case "usdtPriceReverse":
+        this.setState({ show: "usdtPrice" });
+        break;
+    }
+  }
+
+  priceSort() {
+    switch (this.state.show) {
+      case "btc":
+        this.setState({ show: "btcPrice" });
+        break;
+      case "xmr":
+        this.setState({ show: "xmrPrice" });
+        break;
+      case "usdt":
+        this.setState({ show: "usdtPrice" });
+        break;
+      case "eth":
+        this.setState({ show: "ethPrice" });
+        break;
+
+      case "btcVolume":
+        this.setState({ show: "btcPrice" });
+        break;
+      case "xmrVolume":
+        this.setState({ show: "xmrPrice" });
+        break;
+      case "usdtVolume":
+        this.setState({ show: "usdtPrice" });
+        break;
+      case "ethVolume":
+        this.setState({ show: "ethPrice" });
+        break;
+
+      case "btcChange":
+        this.setState({ show: "btcPrice" });
+        break;
+      case "xmrChange":
+        this.setState({ show: "xmrPrice" });
+        break;
+      case "usdtChange":
+        this.setState({ show: "usdtPrice" });
+        break;
+      case "ethChange":
+        this.setState({ show: "ethPrice" });
+        break;
+
+      case "btcPrice":
+        this.setState({ show: "btcPrice" });
+        break;
+      case "xmrPrice":
+        this.setState({ show: "xmrPrice" });
+        break;
+      case "usdtPrice":
+        this.setState({ show: "usdtPrice" });
+        break;
+      case "ethPrice":
+        this.setState({ show: "ethPrice" });
+        break;
+
+      case "btcVolumeReverse":
+        this.setState({ show: "btcPrice" });
+        break;
+      case "xmrVolumeReverse":
+        this.setState({ show: "xmrPrice" });
+        break;
+      case "usdtVolumeReverse":
+        this.setState({ show: "usdtPrice" });
+        break;
+      case "ethVolumeReverse":
+        this.setState({ show: "ethPrice" });
+        break;
+
+      case "btcReverse":
+        this.setState({ show: "btcPrice" });
+        break;
+      case "xmrReverse":
+        this.setState({ show: "xmrPrice" });
+        break;
+      case "usdtReverse":
+        this.setState({ show: "usdtPrice" });
+        break;
+      case "ethReverse":
+        this.setState({ show: "ethPrice" });
+        break;
+
+      case "btcChangeReverse":
+        this.setState({ show: "btcPrice" });
+        break;
+      case "xmrChangeReverse":
+        this.setState({ show: "xmrPrice" });
+        break;
+      case "usdtChangeReverse":
+        this.setState({ show: "usdtPrice" });
+        break;
+      case "ethChangeReverse":
+        this.setState({ show: "ethPrice" });
+        break;
+
+      case "btcPriceReverse":
+        this.setState({ show: "btcPriceReverse" });
+        break;
+      case "xmrPriceReverse":
+        this.setState({ show: "xmrPriceReverse" });
+        break;
+      case "usdtPriceReverse":
+        this.setState({ show: "usdtPriceReverse" });
+        break;
+      case "ethPriceReverse":
+        this.setState({ show: "ethPriceReverse" });
+        break;
+    }
+  }
+
+  changeSort() {
+    switch (this.state.show) {
+      case "btc":
+        this.setState({ show: "btcChange" });
+        break;
+      case "xmr":
+        this.setState({ show: "xmrChange" });
+        break;
+      case "usdt":
+        this.setState({ show: "usdtChange" });
+        break;
+      case "eth":
+        this.setState({ show: "ethChange" });
+        break;
+
+      case "btcVolume":
+        this.setState({ show: "btcChange" });
+        break;
+      case "xmrVolume":
+        this.setState({ show: "xmrChange" });
+        break;
+      case "usdtVolume":
+        this.setState({ show: "usdtChange" });
+        break;
+      case "ethVolume":
+        this.setState({ show: "ethChange" });
+        break;
+
+      case "btcChange":
+        this.setState({ show: "btcChange" });
+        break;
+      case "xmrChange":
+        this.setState({ show: "xmrChange" });
+        break;
+      case "usdtChange":
+        this.setState({ show: "usdtChange" });
+        break;
+      case "ethChange":
+        this.setState({ show: "ethChange" });
+        break;
+
+      case "btcPrice":
+        this.setState({ show: "btcChange" });
+        break;
+      case "xmrPrice":
+        this.setState({ show: "xmrChange" });
+        break;
+      case "usdtPrice":
+        this.setState({ show: "usdtChange" });
+        break;
+      case "ethPrice":
+        this.setState({ show: "ethChange" });
+        break;
+
+      case "btcVolumeReverse":
+        this.setState({ show: "btcChange" });
+        break;
+      case "xmrVolumeReverse":
+        this.setState({ show: "xmrChange" });
+        break;
+      case "usdtVolumeReverse":
+        this.setState({ show: "usdtChange" });
+        break;
+      case "ethVolumeReverse":
+        this.setState({ show: "ethChange" });
+        break;
+
+      case "btcReverse":
+        this.setState({ show: "btcChange" });
+        break;
+      case "xmrReverse":
+        this.setState({ show: "xmrChange" });
+        break;
+      case "usdtReverse":
+        this.setState({ show: "usdtChange" });
+        break;
+      case "ethReverse":
+        this.setState({ show: "ethChange" });
+        break;
+
+      case "btcChangeReverse":
+        this.setState({ show: "btcChangeReverse" });
+        break;
+      case "xmrChangeReverse":
+        this.setState({ show: "xmrChangeReverse" });
+        break;
+      case "usdtChangeReverse":
+        this.setState({ show: "usdtChangeReverse" });
+        break;
+      case "ethChangeReverse":
+        this.setState({ show: "ethChangeReverse" });
+        break;
+
+      case "btcPriceReverse":
+        this.setState({ show: "btcChange" });
+        break;
+      case "xmrPriceReverse":
+        this.setState({ show: "xmrChange" });
+        break;
+      case "usdtPriceReverse":
+        this.setState({ show: "usdtChange" });
+        break;
+      case "ethPriceReverse":
+        this.setState({ show: "ethChange" });
+        break;
+    }
+  }
+
+  volumeSort() {
+    switch (this.state.show) {
+      case "btc":
+        this.setState({ show: "btcVolume" });
+        break;
+      case "xmr":
+        this.setState({ show: "xmrVolume" });
+        break;
+      case "usdt":
+        this.setState({ show: "usdtVolume" });
+        break;
+      case "eth":
+        this.setState({ show: "ethVolume" });
+        break;
+
+      case "btcVolume":
+        this.setState({ show: "btcVolume" });
+        break;
+      case "xmrVolume":
+        this.setState({ show: "xmrVolume" });
+        break;
+      case "usdtVolume":
+        this.setState({ show: "usdtVolume" });
+        break;
+      case "ethVolume":
+        this.setState({ show: "ethVolume" });
+        break;
+
+      case "btcChange":
+        this.setState({ show: "btcVolume" });
+        break;
+      case "xmrChange":
+        this.setState({ show: "xmrVolume" });
+        break;
+      case "usdtChange":
+        this.setState({ show: "usdtVolume" });
+        break;
+      case "ethChange":
+        this.setState({ show: "ethVolume" });
+        break;
+
+      case "btcPrice":
+        this.setState({ show: "btcVolume" });
+        break;
+      case "xmrPrice":
+        this.setState({ show: "xmrVolume" });
+        break;
+      case "usdtPrice":
+        this.setState({ show: "usdtVolume" });
+        break;
+      case "ethPrice":
+        this.setState({ show: "ethVolume" });
+        break;
+
+      case "btcVolumeReverse":
+        this.setState({ show: "btcVolumeReverse" });
+        break;
+      case "xmrVolumeReverse":
+        this.setState({ show: "xmrVolumeReverse" });
+        break;
+      case "usdtVolumeReverse":
+        this.setState({ show: "usdtVolumeReverse" });
+        break;
+      case "ethVolumeReverse":
+        this.setState({ show: "ethVolumeReverse" });
+        break;
+
+      case "btcReverse":
+        this.setState({ show: "btcVolume" });
+        break;
+      case "xmrReverse":
+        this.setState({ show: "xmrVolume" });
+        break;
+      case "usdtReverse":
+        this.setState({ show: "usdtVolume" });
+        break;
+      case "ethReverse":
+        this.setState({ show: "ethVolume" });
+        break;
+
+      case "btcChangeReverse":
+        this.setState({ show: "btcVolume" });
+        break;
+      case "xmrChangeReverse":
+        this.setState({ show: "xmrVolume" });
+        break;
+      case "usdtChangeReverse":
+        this.setState({ show: "usdtVolume" });
+        break;
+      case "ethChangeReverse":
+        this.setState({ show: "ethVolume" });
+        break;
+
+      case "btcPriceReverse":
+        this.setState({ show: "btcVolume" });
+        break;
+      case "xmrPriceReverse":
+        this.setState({ show: "xmrVolume" });
+        break;
+      case "usdtPriceReverse":
+        this.setState({ show: "usdtVolume" });
+        break;
+      case "ethPriceReverse":
+        this.setState({ show: "ethVolume" });
+        break;
+    }
+  }
+
   render() {
     return (
       <Container>
         <Container>
-          <Content>
+          <Content style={{ marginTop: 10 }}>
+            <Item rounded>
+              <Icon style={{ color: "lightgrey" }} name="search" />
+              <Input
+                style={{ color: "lightgrey" }}
+                placeholder="Search"
+                placeholderTextColor="lightgrey"
+                maxLength={5}
+                autoCapitalize="characters"
+                onChangeText={text => this.setState({ text })}
+                value={this.state.text}
+                onSubmitEditing={e => {
+                  this.setState({ show: "search" });
+                }}
+                returnKeyType="go"
+              />
+            </Item>
             <List
               dataArray={this.show()}
               renderRow={pair =>
@@ -385,111 +836,7 @@ export default class Exchangeoverview extends React.Component {
             <Button
               style={{ backgroundColor: "lightblue" }}
               onPress={() => {
-                switch (this.state.show) {
-                  case "btc":
-                    this.setState({ show: "btcReverse" });
-                    break;
-                  case "xmr":
-                    this.setState({ show: "xmrReverse" });
-                    break;
-                  case "eth":
-                    this.setState({ show: "ethReverse" });
-                    break;
-                  case "usdt":
-                    this.setState({ show: "usdtReverse" });
-                    break;
-
-                  case "btcVolume":
-                    this.setState({ show: "btcVolumeReverse" });
-                    break;
-                  case "xmrVolume":
-                    this.setState({ show: "xmrVolumeReverse" });
-                    break;
-                  case "ethVolume":
-                    this.setState({ show: "ethVolumeReverse" });
-                    break;
-                  case "usdtVolume":
-                    this.setState({ show: "usdtVolumeReverse" });
-                    break;
-
-                  case "btcChange":
-                    this.setState({ show: "btcChangeReverse" });
-                    break;
-                  case "xmrChange":
-                    this.setState({ show: "xmrChangeReverse" });
-                    break;
-                  case "ethChange":
-                    this.setState({ show: "ethChangeReverse" });
-                    break;
-                  case "usdtChange":
-                    this.setState({ show: "usdtChangeReverse" });
-                    break;
-
-                  case "btcPrice":
-                    this.setState({ show: "btcPriceReverse" });
-                    break;
-                  case "xmrPrice":
-                    this.setState({ show: "xmrPriceReverse" });
-                    break;
-                  case "ethPrice":
-                    this.setState({ show: "ethPriceReverse" });
-                    break;
-                  case "usdtPrice":
-                    this.setState({ show: "usdtPriceReverse" });
-                    break;
-
-                  case "btcReverse":
-                    this.setState({ show: "btc" });
-                    break;
-                  case "xmrReverse":
-                    this.setState({ show: "xmr" });
-                    break;
-                  case "ethReverse":
-                    this.setState({ show: "eth" });
-                    break;
-                  case "usdtReverse":
-                    this.setState({ show: "usdt" });
-                    break;
-
-                  case "btcVolumeReverse":
-                    this.setState({ show: "btcVolume" });
-                    break;
-                  case "xmrVolumeReverse":
-                    this.setState({ show: "xmrVolume" });
-                    break;
-                  case "ethVolumeReverse":
-                    this.setState({ show: "ethVolume" });
-                    break;
-                  case "usdtVolumeReverse":
-                    this.setState({ show: "usdtVolume" });
-                    break;
-
-                  case "btcChangeReverse":
-                    this.setState({ show: "btcChange" });
-                    break;
-                  case "xmrChangeReverse":
-                    this.setState({ show: "xmrChange" });
-                    break;
-                  case "ethChangeReverse":
-                    this.setState({ show: "ethChange" });
-                    break;
-                  case "usdtChangeReverse":
-                    this.setState({ show: "usdtChange" });
-                    break;
-
-                  case "btcPriceReverse":
-                    this.setState({ show: "btcPrice" });
-                    break;
-                  case "xmrPriceReverse":
-                    this.setState({ show: "xmrPrice" });
-                    break;
-                  case "ethPriceReverse":
-                    this.setState({ show: "ethPrice" });
-                    break;
-                  case "usdtPriceReverse":
-                    this.setState({ show: "usdtPrice" });
-                    break;
-                }
+                this.reverseSort();
               }}
             >
               <Thumbnail
@@ -501,111 +848,7 @@ export default class Exchangeoverview extends React.Component {
             <Button
               style={{ backgroundColor: "darkred" }}
               onPress={() => {
-                switch (this.state.show) {
-                  case "btc":
-                    this.setState({ show: "btcPrice" });
-                    break;
-                  case "xmr":
-                    this.setState({ show: "xmrPrice" });
-                    break;
-                  case "usdt":
-                    this.setState({ show: "usdtPrice" });
-                    break;
-                  case "eth":
-                    this.setState({ show: "ethPrice" });
-                    break;
-
-                  case "btcVolume":
-                    this.setState({ show: "btcPrice" });
-                    break;
-                  case "xmrVolume":
-                    this.setState({ show: "xmrPrice" });
-                    break;
-                  case "usdtVolume":
-                    this.setState({ show: "usdtPrice" });
-                    break;
-                  case "ethVolume":
-                    this.setState({ show: "ethPrice" });
-                    break;
-
-                  case "btcChange":
-                    this.setState({ show: "btcPrice" });
-                    break;
-                  case "xmrChange":
-                    this.setState({ show: "xmrPrice" });
-                    break;
-                  case "usdtChange":
-                    this.setState({ show: "usdtPrice" });
-                    break;
-                  case "ethChange":
-                    this.setState({ show: "ethPrice" });
-                    break;
-
-                  case "btcPrice":
-                    this.setState({ show: "btcPrice" });
-                    break;
-                  case "xmrPrice":
-                    this.setState({ show: "xmrPrice" });
-                    break;
-                  case "usdtPrice":
-                    this.setState({ show: "usdtPrice" });
-                    break;
-                  case "ethPrice":
-                    this.setState({ show: "ethPrice" });
-                    break;
-
-                  case "btcVolumeReverse":
-                    this.setState({ show: "btcPrice" });
-                    break;
-                  case "xmrVolumeReverse":
-                    this.setState({ show: "xmrPrice" });
-                    break;
-                  case "usdtVolumeReverse":
-                    this.setState({ show: "usdtPrice" });
-                    break;
-                  case "ethVolumeReverse":
-                    this.setState({ show: "ethPrice" });
-                    break;
-
-                  case "btcReverse":
-                    this.setState({ show: "btcPrice" });
-                    break;
-                  case "xmrReverse":
-                    this.setState({ show: "xmrPrice" });
-                    break;
-                  case "usdtReverse":
-                    this.setState({ show: "usdtPrice" });
-                    break;
-                  case "ethReverse":
-                    this.setState({ show: "ethPrice" });
-                    break;
-
-                  case "btcChangeReverse":
-                    this.setState({ show: "btcPrice" });
-                    break;
-                  case "xmrChangeReverse":
-                    this.setState({ show: "xmrPrice" });
-                    break;
-                  case "usdtChangeReverse":
-                    this.setState({ show: "usdtPrice" });
-                    break;
-                  case "ethChangeReverse":
-                    this.setState({ show: "ethPrice" });
-                    break;
-
-                  case "btcPriceReverse":
-                    this.setState({ show: "btcPriceReverse" });
-                    break;
-                  case "xmrPriceReverse":
-                    this.setState({ show: "xmrPriceReverse" });
-                    break;
-                  case "usdtPriceReverse":
-                    this.setState({ show: "usdtPriceReverse" });
-                    break;
-                  case "ethPriceReverse":
-                    this.setState({ show: "ethPriceReverse" });
-                    break;
-                }
+                this.priceSort();
               }}
             >
               <Thumbnail
@@ -617,111 +860,7 @@ export default class Exchangeoverview extends React.Component {
             <Button
               style={{ backgroundColor: "green" }}
               onPress={() => {
-                switch (this.state.show) {
-                  case "btc":
-                    this.setState({ show: "btcChange" });
-                    break;
-                  case "xmr":
-                    this.setState({ show: "xmrChange" });
-                    break;
-                  case "usdt":
-                    this.setState({ show: "usdtChange" });
-                    break;
-                  case "eth":
-                    this.setState({ show: "ethChange" });
-                    break;
-
-                  case "btcVolume":
-                    this.setState({ show: "btcChange" });
-                    break;
-                  case "xmrVolume":
-                    this.setState({ show: "xmrChange" });
-                    break;
-                  case "usdtVolume":
-                    this.setState({ show: "usdtChange" });
-                    break;
-                  case "ethVolume":
-                    this.setState({ show: "ethChange" });
-                    break;
-
-                  case "btcChange":
-                    this.setState({ show: "btcChange" });
-                    break;
-                  case "xmrChange":
-                    this.setState({ show: "xmrChange" });
-                    break;
-                  case "usdtChange":
-                    this.setState({ show: "usdtChange" });
-                    break;
-                  case "ethChange":
-                    this.setState({ show: "ethChange" });
-                    break;
-
-                  case "btcPrice":
-                    this.setState({ show: "btcChange" });
-                    break;
-                  case "xmrPrice":
-                    this.setState({ show: "xmrChange" });
-                    break;
-                  case "usdtPrice":
-                    this.setState({ show: "usdtChange" });
-                    break;
-                  case "ethPrice":
-                    this.setState({ show: "ethChange" });
-                    break;
-
-                  case "btcVolumeReverse":
-                    this.setState({ show: "btcChange" });
-                    break;
-                  case "xmrVolumeReverse":
-                    this.setState({ show: "xmrChange" });
-                    break;
-                  case "usdtVolumeReverse":
-                    this.setState({ show: "usdtChange" });
-                    break;
-                  case "ethVolumeReverse":
-                    this.setState({ show: "ethChange" });
-                    break;
-
-                  case "btcReverse":
-                    this.setState({ show: "btcChange" });
-                    break;
-                  case "xmrReverse":
-                    this.setState({ show: "xmrChange" });
-                    break;
-                  case "usdtReverse":
-                    this.setState({ show: "usdtChange" });
-                    break;
-                  case "ethReverse":
-                    this.setState({ show: "ethChange" });
-                    break;
-
-                  case "btcChangeReverse":
-                    this.setState({ show: "btcChangeReverse" });
-                    break;
-                  case "xmrChangeReverse":
-                    this.setState({ show: "xmrChangeReverse" });
-                    break;
-                  case "usdtChangeReverse":
-                    this.setState({ show: "usdtChangeReverse" });
-                    break;
-                  case "ethChangeReverse":
-                    this.setState({ show: "ethChangeReverse" });
-                    break;
-
-                  case "btcPriceReverse":
-                    this.setState({ show: "btcChange" });
-                    break;
-                  case "xmrPriceReverse":
-                    this.setState({ show: "xmrChange" });
-                    break;
-                  case "usdtPriceReverse":
-                    this.setState({ show: "usdtChange" });
-                    break;
-                  case "ethPriceReverse":
-                    this.setState({ show: "ethChange" });
-                    break;
-                }
+                this.changeSort();
               }}
             >
               <Thumbnail source={require("./change.png")} small size={25} />
@@ -729,111 +868,7 @@ export default class Exchangeoverview extends React.Component {
             <Button
               style={{ backgroundColor: "yellow" }}
               onPress={() => {
-                switch (this.state.show) {
-                  case "btc":
-                    this.setState({ show: "btcVolume" });
-                    break;
-                  case "xmr":
-                    this.setState({ show: "xmrVolume" });
-                    break;
-                  case "usdt":
-                    this.setState({ show: "usdtVolume" });
-                    break;
-                  case "eth":
-                    this.setState({ show: "ethVolume" });
-                    break;
-
-                  case "btcVolume":
-                    this.setState({ show: "btcVolume" });
-                    break;
-                  case "xmrVolume":
-                    this.setState({ show: "xmrVolume" });
-                    break;
-                  case "usdtVolume":
-                    this.setState({ show: "usdtVolume" });
-                    break;
-                  case "ethVolume":
-                    this.setState({ show: "ethVolume" });
-                    break;
-
-                  case "btcChange":
-                    this.setState({ show: "btcVolume" });
-                    break;
-                  case "xmrChange":
-                    this.setState({ show: "xmrVolume" });
-                    break;
-                  case "usdtChange":
-                    this.setState({ show: "usdtVolume" });
-                    break;
-                  case "ethChange":
-                    this.setState({ show: "ethVolume" });
-                    break;
-
-                  case "btcPrice":
-                    this.setState({ show: "btcVolume" });
-                    break;
-                  case "xmrPrice":
-                    this.setState({ show: "xmrVolume" });
-                    break;
-                  case "usdtPrice":
-                    this.setState({ show: "usdtVolume" });
-                    break;
-                  case "ethPrice":
-                    this.setState({ show: "ethVolume" });
-                    break;
-
-                  case "btcVolumeReverse":
-                    this.setState({ show: "btcVolumeReverse" });
-                    break;
-                  case "xmrVolumeReverse":
-                    this.setState({ show: "xmrVolumeReverse" });
-                    break;
-                  case "usdtVolumeReverse":
-                    this.setState({ show: "usdtVolumeReverse" });
-                    break;
-                  case "ethVolumeReverse":
-                    this.setState({ show: "ethVolumeReverse" });
-                    break;
-
-                  case "btcReverse":
-                    this.setState({ show: "btcVolume" });
-                    break;
-                  case "xmrReverse":
-                    this.setState({ show: "xmrVolume" });
-                    break;
-                  case "usdtReverse":
-                    this.setState({ show: "usdtVolume" });
-                    break;
-                  case "ethReverse":
-                    this.setState({ show: "ethVolume" });
-                    break;
-
-                  case "btcChangeReverse":
-                    this.setState({ show: "btcVolume" });
-                    break;
-                  case "xmrChangeReverse":
-                    this.setState({ show: "xmrVolume" });
-                    break;
-                  case "usdtChangeReverse":
-                    this.setState({ show: "usdtVolume" });
-                    break;
-                  case "ethChangeReverse":
-                    this.setState({ show: "ethVolume" });
-                    break;
-
-                  case "btcPriceReverse":
-                    this.setState({ show: "btcVolume" });
-                    break;
-                  case "xmrPriceReverse":
-                    this.setState({ show: "xmrVolume" });
-                    break;
-                  case "usdtPriceReverse":
-                    this.setState({ show: "usdtVolume" });
-                    break;
-                  case "ethPriceReverse":
-                    this.setState({ show: "ethVolume" });
-                    break;
-                }
+                this.volumeSort();
               }}
             >
               <Thumbnail
@@ -849,5 +884,6 @@ export default class Exchangeoverview extends React.Component {
   }
 }
 //refreshcontrol
-//search
+//search //regex //filter //test //slice //segregate
 //sort fails
+//build fails

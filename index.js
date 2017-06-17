@@ -44,4 +44,5 @@ export default class Index extends React.Component {
   }
 }
 //heading
-//loading webview
+//loading -all
+//features, improvements -all

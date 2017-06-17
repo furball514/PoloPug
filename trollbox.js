@@ -60,15 +60,47 @@ export class Troll extends React.Component {
           </Text>
           <View style={{ borderBottomWidth: 1, borderBottomColor: "white" }} />
           <View>
-            <List
-              dataArray={this.state.data}
-              renderRow={msg =>
-                <ListItem>
-                  <Text style={{ color: "white" }}>
-                    {JSON.stringify(msg)}
-                  </Text>
-                </ListItem>}
-            />
+            <Text
+              style={{ color: "white", alignSelf: "center", marginTop: 10 }}
+            >
+              Poloniex has disabled official TrollBox
+            </Text>
+            <View
+              style={{
+                borderLeftWidth: 3,
+                borderLeftColor: "lightblue",
+                marginLeft: 20,
+                marginTop: 15,
+                flex: 1
+              }}
+            >
+              <Text
+                style={{
+                  color: "orange",
+                  textDecorationLine: "underline",
+                  marginLeft: 9
+                }}
+              >
+                OldManKidd
+              </Text>
+              <Text style={{ color: "lightblue", marginLeft: 9 }}>
+                To meet the increasing demands on support staff, the
+                Trollbox has been disabled indefinitely and moderators have
+                been reallocated to assist in support.
+              </Text>
+            </View>
+            <Text
+              style={{
+                color: "white",
+                marginTop: 50,
+                marginLeft: 20,
+                marginRight: 20
+              }}
+            >
+              {" "}However unofficial TrollBox can be found at slack.com. Click
+              below.
+              {" "}
+            </Text>
           </View>
         </Content>
         <View
@@ -198,20 +230,5 @@ const styles = StyleSheet.create({
   }
 });
 
-/*function initWebSocketsForTrollbox(){if(newWebSockets)return initWebSocketsForTrollbox_new();var n="wss://api.poloniex.com";isLocal&&(n="wss://pushstaging.poloniex.com"),window.connection=new autobahn.Connection({url:n,realm:"realm1"}),window.connection.onopen=function(n){n.subscribe("trollbox",trollboxEvent)},window.connection.onclose=function(){},window.connection.open()}function initWebSocketsForTrollbox_new(){webSocketConnected||(webSocketConnected=!0,window.conn=new WebSocket("wss://api2.poloniex.com"),window.conn.onopen=function(n){this.send(JSON.stringify({command:"subscribe",channel:1001}))},window.conn.onmessage=function(n){var o=JSON.parse(n.data);switch(o[0]){case 1001:trollboxEvent(o)}},window.conn.onerror=function(n){},window.conn.onclose=function(n){webSocketConnected=!1,setTimeout(initWebSockets_new,2e3)})}var webSocketConnected=!1;
-<WebView
-style={styles.web}
-source={{uri:"https://www.poloniex.com/trollbox"}}<Body><Text style={{color:"white"}}>{msg.message}</Text></Body><Right><Text><Text style={{color:"white"}}>{msg.username}</Text><Text style={{color:"white"}}>{msg.reputation}</Text></Text></Right>
+//slack
 
-  <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  justifyContent: "space-around"
-                }}
-              >
-*/
-//slacks
-//useragent
-//loading
-//layout

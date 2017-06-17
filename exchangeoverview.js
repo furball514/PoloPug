@@ -246,6 +246,26 @@ export default class Exchangeoverview extends React.Component {
       return this.state.dataEthPriceReverse;
     } else if (this.state.show === "usdtPriceReverse") {
       return this.state.dataUsdtPriceReverse;
+    } else if (this.state.show === "search") {
+      let results = [];
+      results = this.state.dataBtc
+        .filter(obj => obj.pair.indexOf(this.state.text) != -1)
+        .concat(
+          this.state.dataEth.filter(
+            obj => obj.pair.indexOf(this.state.text) != -1
+          )
+        )
+        .concat(
+          this.state.dataXmr.filter(
+            obj => obj.pair.indexOf(this.state.text) != -1
+          )
+        )
+        .concat(
+          this.state.dataUsdt.filter(
+            obj => obj.pair.indexOf(this.state.text) != -1
+          )
+        );
+      return results;
     }
   }
 
@@ -373,6 +393,10 @@ export default class Exchangeoverview extends React.Component {
       case "usdtPriceReverse":
         this.setState({ show: "usdtPrice" });
         break;
+
+      default:
+        this.setState({ show: "btc" });
+        break;
     }
   }
 
@@ -480,6 +504,10 @@ export default class Exchangeoverview extends React.Component {
         break;
       case "ethPriceReverse":
         this.setState({ show: "ethPriceReverse" });
+        break;
+
+      default:
+        this.setState({ show: "btc" });
         break;
     }
   }
@@ -589,6 +617,10 @@ export default class Exchangeoverview extends React.Component {
       case "ethPriceReverse":
         this.setState({ show: "ethChange" });
         break;
+
+      default:
+        this.setState({ show: "btc" });
+        break;
     }
   }
 
@@ -697,6 +729,10 @@ export default class Exchangeoverview extends React.Component {
       case "ethPriceReverse":
         this.setState({ show: "ethVolume" });
         break;
+
+      default:
+        this.setState({ show: "btc" });
+        break;
     }
   }
 
@@ -711,7 +747,6 @@ export default class Exchangeoverview extends React.Component {
                 style={{ color: "lightgrey" }}
                 placeholder="Search"
                 placeholderTextColor="lightgrey"
-                maxLength={5}
                 autoCapitalize="characters"
                 onChangeText={text => this.setState({ text })}
                 value={this.state.text}
@@ -883,7 +918,6 @@ export default class Exchangeoverview extends React.Component {
     );
   }
 }
+
 //refreshcontrol
-//search //regex //filter //test //slice //segregate
-//sort fails
-//build fails
+//sort

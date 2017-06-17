@@ -187,6 +187,3 @@ const styles = StyleSheet.create({
   }
 });
 
-//input
-//table
-//webview

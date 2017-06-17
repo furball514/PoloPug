@@ -822,7 +822,9 @@ const styles = StyleSheet.create({
 
 //clearinterval
 //total //inaccurate
-//listview/container/component
-//top spacing in all comps
+//list
+//top spacing
 //props[register]
-//sellorder totals
+//sellordertotals
+//layout
+//uncomment

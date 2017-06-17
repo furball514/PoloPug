@@ -6,6 +6,7 @@ import { Troll } from "./trollbox";
 import Margin from "./margin";
 import myThemes from "./Themes/myThemes";
 import Web from "./webjs.js";
+import { Reddit } from "./reddit";
 
 /**
  * 
@@ -37,6 +38,9 @@ export default class Index extends React.Component {
           </Tab>
           <Tab heading="poloniex.com">
             <Web />
+          </Tab>
+          <Tab heading="Reddit">
+            <Reddit />
           </Tab>
         </Tabs>
       </Container>

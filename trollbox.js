@@ -31,7 +31,8 @@ export class Troll extends React.Component {
         });
       });
   }
-
+  
+  /*
   async componentDidMount() {
     let v;
     try {
@@ -40,10 +41,11 @@ export class Troll extends React.Component {
       console.error(error);
     }
     setInterval(() => {
-      //this.refresh(); //to be uncommented
+      this.refresh(); //to be uncommented
       console.log("refreshed");
     }, 3000);
   }
+  */
 
   render() {
     return (

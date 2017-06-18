@@ -5,7 +5,7 @@ import { Router, Scene } from "react-native-router-flux";
 import Page from "./page";
 import { So, Bo, Mk } from "./pageviews";
 import { TrollSigned } from "./trollbox.js";
-import { RedditOpen } from "./reddit";
+import { RedditOpen, RedditWeb } from "./reddit";
 
 export default class App extends React.Component {
   render() {
@@ -19,6 +19,7 @@ export default class App extends React.Component {
           <Scene key="mk" component={Mk} />
           <Scene key="troll" component={TrollSigned} />
           <Scene key="reddit" component={RedditOpen} />
+          <Scene key="redditweb" component={RedditWeb} />
         </Scene>
       </Router>
     );

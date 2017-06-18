@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, WebView, View } from "react-native";
+import { Text, View, WebView } from "react-native";
 import {
   Container,
   Content,
@@ -13,10 +13,12 @@ import {
   Left,
   Right,
   Thumbnail,
-  Icon
+  Icon,
+  H3
 } from "native-base";
 import { Actions } from "react-native-router-flux";
 import axios from "axios";
+import Loading from "./loading";
 
 export class Reddit extends React.Component {
   state = {
@@ -99,7 +101,7 @@ export class Reddit extends React.Component {
   }
 
   componentDidMount() {
-    //this.fetchData();
+    this.fetchData();
   }
 
   render() {
@@ -258,10 +260,106 @@ export class Reddit extends React.Component {
 }
 
 class RedditViews extends React.Component {
+  show() {
+    if (this.props.crypto == true && this.props.show === "hot") {
+      return this.props.cryptocurrency.hot;
+    } else if (this.props.crypto == true && this.props.show === "new") {
+      return this.props.cryptocurrency.new;
+    } else if (this.props.crypto == true && this.props.show === "top") {
+      return this.props.cryptocurrency.top;
+    } else if (this.props.crypto == true && this.props.show === "rising") {
+      return this.props.cryptocurrency.rising;
+    } else if (
+      this.props.crypto == true &&
+      this.props.show === "controversial"
+    ) {
+      return this.props.cryptocurrency.controversial;
+    } else if (this.props.crypto == false && this.props.show === "hot") {
+      return this.props.poloniex.hot;
+    } else if (this.props.crypto == false && this.props.show === "new") {
+      return this.props.poloniex.new;
+    } else if (this.props.crypto == false && this.props.show === "top") {
+      return this.props.poloniex.top;
+    } else if (this.props.crypto == false && this.props.show === "rising") {
+      return this.props.poloniex.rising;
+    } else if (
+      this.props.crypto == false &&
+      this.props.show === "controversial"
+    ) {
+      return this.props.poloniex.controversial;
+    }
+  }
+
+  colorAssign(author) {
+    if (author === "AutoModerator")
+      return { color: "lightgreen", fontSize: 10 };
+    else return { color: "lightgrey", fontSize: 10 };
+  }
+
   render() {
     return (
       <View style={{ backgroundColor: "#212121", marginTop: 10 }}>
-        <Text />
+        <List
+          dataArray={this.show()}
+          renderRow={item =>
+            <ListItem
+              button
+              onPress={() => {
+                Actions.reddit({
+                  item: item,
+                  colorAssign: this.colorAssign
+                });
+              }}
+            >
+              <Body>
+                <Text>
+                  <Text style={this.colorAssign(item.data.author)}>
+                    u/{item.data.author}
+                  </Text>
+                  <Text>{"      "}</Text>
+                  <Text style={{ color: "lightgrey", fontSize: 10 }}>
+                    {new Date(item.data.created_utc * 1000).toString()}
+                  </Text>
+                </Text>
+                <Text
+                  note
+                  style={{ color: "white", marginBottom: 10, marginTop: 10 }}
+                >
+                  {" "}{item.data.title}
+                  {" "}
+                </Text>
+                <Text note>
+                  <Text style={{ color: "lightgrey", fontSize: 10 }}>
+                    Score: {item.data.score}
+                  </Text>
+                  <Text>{"        "}</Text>
+                  <Text style={{ color: "lightgrey", fontSize: 10 }}>
+                    Replies: {item.data.num_comments}
+                  </Text>
+                  <Text>{"        "}</Text>
+                  <Text
+                    style={{
+                      color: "lightblue",
+                      fontSize: 10,
+                      textDecorationLine: "underline"
+                    }}
+                    onPress={() => {
+                      Actions.redditweb({
+                        url: `https://www.reddit.com${item.data.permalink}`
+                      });
+                    }}
+                  >
+                    Link
+                  </Text>
+                </Text>
+              </Body>
+              <Right>
+                <Thumbnail square source={{ uri: item.data.thumbnail }} />
+                <Text>{"  "}</Text>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>}
+        />
       </View>
     );
   }
@@ -269,10 +367,65 @@ class RedditViews extends React.Component {
 
 export class RedditOpen extends React.Component {
   render() {
-    return <WebView />;
+    return (
+      <Container style={{ backgroundColor: "#212121", marginTop: 100 }}>
+        <Content>
+          <Left>
+            <Thumbnail />
+          </Left>
+          <Body>
+            <Text>
+              <Text style={{ color: "lightgrey", fontSize: 10 }}>
+                {" "}subreddit
+                {" "}
+              </Text>
+              <Text style={{ color: "lightgrey", fontSize: 10 }}> time </Text>
+            </Text>
+            <Text style={this.props.colorAssign(this.props.item.data.author)}>
+              {" "}user
+              {" "}
+            </Text>
+          </Body>
+          <H3 style={{ color: "white", marginBottom: 15, marginTop: 15 }}> </H3>
+          <View>
+            <Text> main </Text>
+          </View>
+          <Text>
+            <Text style={{ color: "lightgrey", fontSize: 10 }}>
+              Score:
+            </Text>
+            <Text>{"   "}</Text>
+            <Text style={{ color: "lightgrey", fontSize: 10 }}>
+              Replies:
+            </Text>
+            <Text>{"   "}</Text>
+            <Text
+              style={{
+                color: "lightblue",
+                fontSize: 10,
+                textDecorationLine: "underline"
+              }}
+            >
+              Link
+            </Text>
+          </Text>
+        </Content>
+      </Container>
+    );
   }
 }
 
+export class RedditWeb extends React.Component {
+  render() {
+    return (
+      <WebView
+        source={{ uri: this.props.url }}
+        renderLoading={() => <Loading />}
+        style={{ height: 900, alignSelf: "stretch" }}
+      />
+    );
+  }
+}
 //sort
 //open webview
 //refreshcontrol

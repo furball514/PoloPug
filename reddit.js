@@ -12,7 +12,8 @@ import {
   Fab,
   Left,
   Right,
-  Thumbnail
+  Thumbnail,
+  Icon
 } from "native-base";
 import { Actions } from "react-native-router-flux";
 import axios from "axios";
@@ -34,7 +35,8 @@ export class Reddit extends React.Component {
       controversial: []
     },
     crypto: false,
-    show: "hot"
+    show: "hot",
+    active: false
   };
 
   fetchData() {
@@ -97,7 +99,7 @@ export class Reddit extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    //this.fetchData();
   }
 
   render() {
@@ -162,7 +164,7 @@ export class Reddit extends React.Component {
                   color: "orangered"
                 }}
               >
-                [{this.state.show}]
+                [{this.state.show.toUpperCase()}]
               </Text>
               <Text>{"                    "}</Text>
               <Text style={{ color: "orangered" }}>
@@ -180,7 +182,76 @@ export class Reddit extends React.Component {
             />
           </Content>
         </Container>
-        <View />
+        <View>
+          <Fab
+            active={this.state.active}
+            direction="up"
+            containerStyle={{ marginLeft: 10 }}
+            style={{ backgroundColor: "black" }}
+            position="bottomLeft"
+            onPress={() => this.setState({ active: !this.state.active })}
+          >
+            <Icon name="menu" />
+            <Button
+              style={{ backgroundColor: "orangered" }}
+              onPress={() => {
+                this.setState({ show: "controversial" });
+              }}
+            >
+              <Thumbnail
+                source={require("./reddit/controversial.png")}
+                small
+                style={{ width: 20, height: 20 }}
+              />
+            </Button>
+            <Button
+              style={{ backgroundColor: "orangered" }}
+              onPress={() => {
+                this.setState({ show: "rising" });
+              }}
+            >
+              <Thumbnail
+                source={require("./reddit/rising.png")}
+                small
+                style={{ width: 25, height: 25 }}
+              />
+            </Button>
+            <Button
+              style={{ backgroundColor: "black" }}
+              onPress={() => {
+                this.setState({ show: "top" });
+              }}
+            >
+              <Thumbnail
+                source={require("./reddit/top.png")}
+                small
+                style={{ width: 23, height: 23 }}
+              />
+            </Button>
+            <Button
+              style={{ backgroundColor: "black" }}
+              onPress={() => {
+                this.setState({ show: "new" });
+              }}
+            >
+              <Thumbnail
+                source={require("./reddit/new.png")}
+                style={{ width: 23, height: 23 }}
+              />
+            </Button>
+            <Button
+              style={{ backgroundColor: "black" }}
+              onPress={() => {
+                this.setState({ show: "hot" });
+              }}
+            >
+              <Thumbnail
+                source={require("./reddit/hot.png")}
+                style={{ width: 25, height: 25 }}
+              />
+            </Button>
+          </Fab>
+        </View>
       </Container>
     );
   }
@@ -189,13 +260,8 @@ export class Reddit extends React.Component {
 class RedditViews extends React.Component {
   render() {
     return (
-      <View style={{ backgroundColor: "#212121" }}>
-        <Text style={{ color: "white" }}>
-          {JSON.stringify(this.props.cryptocurrency)}
-        </Text>
-        <Text style={{ color: "white" }}>
-          {JSON.stringify(this.props.poloniex)}
-        </Text>
+      <View style={{ backgroundColor: "#212121", marginTop: 10 }}>
+        <Text />
       </View>
     );
   }

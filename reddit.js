@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, WebView } from "react-native";
+import { Text, View, WebView, Image } from "react-native";
 import {
   Container,
   Content,
@@ -14,11 +14,20 @@ import {
   Right,
   Thumbnail,
   Icon,
-  H3
+  H3,
+  Footer
 } from "native-base";
 import { Actions } from "react-native-router-flux";
 import axios from "axios";
 import Loading from "./loading";
+
+/**
+ * 
+ * 
+ * @export
+ * @class Reddit
+ * @extends {React.Component}
+ */
 
 export class Reddit extends React.Component {
   state = {
@@ -259,6 +268,13 @@ export class Reddit extends React.Component {
   }
 }
 
+/**
+ * 
+ * 
+ * @class RedditViews
+ * @extends {React.Component}
+ */
+
 class RedditViews extends React.Component {
   show() {
     if (this.props.crypto == true && this.props.show === "hot") {
@@ -365,51 +381,128 @@ class RedditViews extends React.Component {
   }
 }
 
+/**
+ * 
+ * 
+ * @export
+ * @class RedditOpen
+ * @extends {React.Component}
+ */
+
 export class RedditOpen extends React.Component {
+  returnFlair(flair) {
+    if (flair !== null)
+      return (
+        <Text
+          style={{
+            color: "orangered",
+            backgroundColor: "maroon",
+            fontSize: 10,
+            width: 60,
+            marginTop: 10
+          }}
+        >
+          {flair}
+        </Text>
+      );
+  }
+
+  returnPreview() {
+    if (this.props.item.data.preview) {
+      return (
+        <View style={{ alignSelf: "center" }}>
+          <Thumbnail
+            source={{ uri: this.props.item.data.preview.images[0].source.url }}
+            style={{ height: 450, width: 450 }}
+            square
+          />
+        </View>
+      );
+    }
+  }
+
   render() {
     return (
-      <Container style={{ backgroundColor: "#212121", marginTop: 100 }}>
+      <Container style={{ backgroundColor: "#212121", marginTop: 50 }}>
         <Content>
-          <Left>
-            <Thumbnail />
-          </Left>
-          <Body>
-            <Text>
-              <Text style={{ color: "lightgrey", fontSize: 10 }}>
-                {" "}subreddit
-                {" "}
-              </Text>
-              <Text style={{ color: "lightgrey", fontSize: 10 }}> time </Text>
+          <Text
+            style={{ alignSelf: "stretch", marginLeft: 20, marginRight: 10 }}
+          >
+            <Text style={{ color: "lightgrey", fontSize: 10 }}>
+              {this.props.item.data.subreddit_name_prefixed}
             </Text>
+            <Text>{"                 "}</Text>
             <Text style={this.props.colorAssign(this.props.item.data.author)}>
-              {" "}user
-              {" "}
+              u/{this.props.item.data.author}
             </Text>
-          </Body>
-          <H3 style={{ color: "white", marginBottom: 15, marginTop: 15 }}> </H3>
+          </Text>
+          {this.returnFlair(this.props.item.data.link_flair_text)}
+          <H3 style={{ color: "white", marginBottom: 15, marginTop: 15 }}>
+            {this.props.item.data.title}
+          </H3>
           <View>
-            <Text> main </Text>
+            <Text style={{ color: "white" }}>
+              {this.props.item.data.selftext}
+            </Text>
+            {this.returnPreview()}
           </View>
-          <Text>
+          <View
+            style={{
+              borderBottomColor: "white",
+              borderBottomWidth: 1,
+              marginTop: 15
+            }}
+          />
+          <Text style={{ alignSelf: "center" }}>
             <Text style={{ color: "lightgrey", fontSize: 10 }}>
-              Score:
+              Score: {this.props.item.data.score}
             </Text>
-            <Text>{"   "}</Text>
+            <Text>{"          "}</Text>
             <Text style={{ color: "lightgrey", fontSize: 10 }}>
-              Replies:
+              Replies: {this.props.item.data.num_comments}
             </Text>
-            <Text>{"   "}</Text>
+            <Text>{"          "}</Text>
             <Text
               style={{
                 color: "lightblue",
                 fontSize: 10,
                 textDecorationLine: "underline"
               }}
+              onPress={() => {
+                Actions.redditweb({
+                  url: this.props.item.data.url
+                });
+              }}
             >
               Link
             </Text>
           </Text>
+          <View style={{ borderBottomColor: "white", borderBottomWidth: 1 }} />
+          <H3
+            style={{
+              color: "lightblue",
+              textDecorationLine: "underline",
+              marginTop: 50,
+              marginBottom: 50,
+              alignSelf: "center"
+            }}
+            onPress={() => {
+              Actions.redditweb({
+                url: `https://www.reddit.com${this.props.item.data.permalink}`
+              });
+            }}
+          >
+            {" "}Open In Web{" "}
+          </H3>
         </Content>
+        <View>
+          <Footer>
+            <Text style={{ color: "lightgrey", fontSize: 10 }}>
+              {" "}
+              {new Date(this.props.item.data.created_utc * 1000).toString()}
+            </Text>
+          </Footer>
+        </View>
       </Container>
     );
   }
@@ -426,6 +519,6 @@ export class RedditWeb extends React.Component {
     );
   }
 }
-//sort
-//open webview
+
+//test
 //refreshcontrol

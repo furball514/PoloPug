@@ -213,7 +213,7 @@ class ViewsTwo extends React.Component {
     sellOrders: [],
     tradeHistory: [],
     delayed: true,
-    sellOrdersTotal: Number,
+    sellOrdersTotals: Number,
     buyOrdersTotals: Number,
     mountBuyFirst: true
   };
@@ -249,10 +249,10 @@ class ViewsTwo extends React.Component {
       .then(responseData => {
         let asksArr = [];
         let bidsArr = [];
-        let askRate;
+        //let askRate;
         responseData.data.asks.map((ask, key) => {
           asksArr.push(ask[0] * ask[1]);
-          askRate = ask[0];
+          // askRate = ask[0];
         });
         responseData.data.bids.map((bid, key) => {
           bidsArr.push(bid[0] * bid[1]);
@@ -261,7 +261,7 @@ class ViewsTwo extends React.Component {
         this.setState({
           sellOrders: responseData.data.asks,
           buyOrders: responseData.data.bids,
-          sellOrdersTotal: asksArr.reduce((a, b) => a + b),
+          sellOrdersTotals: asksArr.reduce((a, b) => a + b),
           buyOrdersTotals: bidsArr.reduce((c, d) => c + d)
         });
       });
@@ -411,7 +411,7 @@ class ViewsTwo extends React.Component {
         <Card>
           <H3> SELL ORDERS </H3>
           <Text style={{ fontSize: 15 }}>
-            {" "}Total: {this.state.sellOrdersTotal} {this.props.quote}
+            {" "}Total: {this.state.sellOrdersTotals} {this.props.quote}
             {" "}
           </Text>
           <List
@@ -516,7 +516,7 @@ class ViewsTwo extends React.Component {
         <Card>
           <H3> SELL ORDERS </H3>
           <Text style={{ fontSize: 15 }}>
-            {" "}Total: {this.state.sellOrdersTotal} {this.props.quote}
+            {" "}Total: {this.state.sellOrdersTotals} {this.props.quote}
             {" "}
           </Text>
           <List
@@ -821,7 +821,7 @@ const styles = StyleSheet.create({
 });
 
 //clearinterval
-//total //inaccurate
+//order totals //inaccurate
 //list
 //top spacing
 //props[register]

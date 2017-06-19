@@ -17,52 +17,16 @@ import {
   Item
 } from "native-base";
 
-/**
- * 
- * 
- * @export
- * @class Exchangeoverview
- * @extends {React.Component}
- */
-
 export default class Exchangeoverview extends React.Component {
   state = {
     dataBtc: [],
     dataEth: [],
     dataXmr: [],
     dataUsdt: [],
-    dataBtcReverse: [],
-    dataEthReverse: [],
-    dataXmrReverse: [],
-    dataUsdtReverse: [],
-    dataBtcVolume: [],
-    dataEthVolume: [],
-    dataXmrVolume: [],
-    dataUsdtVolume: [],
-    dataBtcChange: [],
-    dataEthChange: [],
-    dataXmrChange: [],
-    dataUsdtChange: [],
-    dataBtcPrice: [],
-    dataEthPrice: [],
-    dataXmrPrice: [],
-    dataUsdtPrice: [],
     show: "btc",
     active: false,
     refreshing: false,
     activeTwo: false,
-    dataBtcVolumeReverse: [],
-    dataEthVolumeReverse: [],
-    dataXmrVolumeReverse: [],
-    dataUsdtVolumeReverse: [],
-    dataBtcPriceReverse: [],
-    dataEthPriceReverse: [],
-    dataXmrPriceReverse: [],
-    dataUsdtPriceReverse: [],
-    dataBtcChangeReverse: [],
-    dataEthChangeReverse: [],
-    dataXmrChangeReverse: [],
-    dataUsdtChangeReverse: [],
     text: ""
   };
 
@@ -102,91 +66,14 @@ export default class Exchangeoverview extends React.Component {
         dataEth: pairsData.toEth,
         dataXmr: pairsData.toXmr,
         dataUsdt: pairsData.toUsdt
-      }), () => {
-        this.setState({
-          dataBtcReverse: pairsData.toBtc.reverse(),
-          dataEthReverse: pairsData.toEth.reverse(),
-          dataXmrReverse: pairsData.toXmr.reverse(),
-          dataUsdtReverse: pairsData.toUsdt.reverse(),
-          dataBtcVolume: pairsData.toBtc.sort(
-            (a, b) => b.baseVolume - a.baseVolume
-          ),
-          dataEthVolume: pairsData.toEth.sort(
-            (a, b) => b.baseVolume - a.baseVolume
-          ),
-          dataXmrVolume: pairsData.toXmr.sort(
-            (a, b) => b.baseVolume - a.baseVolume
-          ),
-          dataUsdtVolume: pairsData.toUsdt.sort(
-            (a, b) => b.baseVolume - a.baseVolume
-          ),
-          dataBtcChange: pairsData.toBtc.sort(
-            (a, b) => b.percentChange - a.percentChange
-          ),
-          dataEthChange: pairsData.toEth.sort(
-            (a, b) => b.percentChange - a.percentChange
-          ),
-          dataXmrChange: pairsData.toXmr.sort(
-            (a, b) => b.percentChange - a.percentChange
-          ),
-          dataUsdtChange: pairsData.toUsdt.sort(
-            (a, b) => b.percentChange - a.percentChange
-          ),
-          dataBtcPrice: pairsData.toBtc.sort((a, b) => b.last - a.last),
-          dataEthPrice: pairsData.toEth.sort((a, b) => b.last - a.last),
-          dataXmrPrice: pairsData.toXmr.sort((a, b) => b.last - a.last),
-          dataUsdtPrice: pairsData.toUsdt.sort((a, b) => b.last - a.last),
-          dataBtcVolumeReverse: pairsData.toBtc.sort(
-            (a, b) => a.baseVolume - b.baseVolume
-          ),
-          dataEthVolumeReverse: pairsData.toEth.sort(
-            (a, b) => a.baseVolume - b.baseVolume
-          ),
-          dataXmrVolumeReverse: pairsData.toXmr.sort(
-            (a, b) => a.baseVolume - b.baseVolume
-          ),
-          dataUsdtVolumeReverse: pairsData.toUsdt.sort(
-            (a, b) => a.baseVolume - b.baseVolume
-          ),
-          dataBtcChangeReverse: pairsData.toBtc.sort(
-            (a, b) => a.percentChange - b.percentChange
-          ),
-          dataEthChangeReverse: pairsData.toEth.sort(
-            (a, b) => a.percentChange - b.percentChange
-          ),
-          dataXmrChangeReverse: pairsData.toXmr.sort(
-            (a, b) => a.percentChange - b.percentChange
-          ),
-          dataUsdtChangeReverse: pairsData.toUsdt.sort(
-            (a, b) => a.percentChange - b.percentChange
-          ),
-          dataBtcPriceReverse: pairsData.toBtc.sort((a, b) => a.last - b.last),
-          dataEthPriceReverse: pairsData.toEth.sort((a, b) => a.last - b.last),
-          dataXmrPriceReverse: pairsData.toXmr.sort((a, b) => a.last - b.last),
-          dataUsdtPriceReverse: pairsData.toUsdt.sort((a, b) => a.last - b.last)
-        });
-      };
+      });
     });
   }
 
   componentDidMount() {
     this.getData();
   }
-  /*
-  onRefresh() {
-    this.setState({ refreshing: true });
-    async () => {
-      let v;
-      try {
-        v = await this.getData();
-      } catch (error) {
-        console.error(error);
-      }
-      this.setState({ refreshing: false });
-      console.log("refreshed");
-    };
-  }
-  */
+
   colorAssign(change) {
     let result;
     switch (change.charAt(0)) {
@@ -210,61 +97,77 @@ export default class Exchangeoverview extends React.Component {
     } else if (this.state.show === "usdt") {
       return this.state.dataUsdt;
     } else if (this.state.show === "btcReverse") {
-      return this.state.dataBtcReverse;
+      return this.state.dataBtc.reverse();
     } else if (this.state.show === "xmrReverse") {
-      return this.state.dataXmrReverse;
+      return this.state.dataXmr.reverse();
     } else if (this.state.show === "ethReverse") {
-      return this.state.dataEthReverse;
+      return this.state.dataEth.reverse();
     } else if (this.state.show === "usdtReverse") {
-      return this.state.dataUsdtReverse;
+      return this.state.dataUsdt.reverse();
     } else if (this.state.show === "btcVolume") {
-      return this.state.dataBtcVolume;
+      return this.state.dataBtc.sort((a, b) => b.baseVolume - a.baseVolume);
     } else if (this.state.show === "xmrVolume") {
-      return this.state.dataXmrVolume;
+      return this.state.dataXmr.sort((a, b) => b.baseVolume - a.baseVolume);
     } else if (this.state.show === "ethVolume") {
-      return this.state.dataEthVolume;
+      return this.state.dataEth.sort((a, b) => b.baseVolume - a.baseVolume);
     } else if (this.state.show === "usdtVolume") {
-      return this.state.dataUsdtVolume;
+      return this.state.dataUsdt.sort((a, b) => b.baseVolume - a.baseVolume);
     } else if (this.state.show === "btcVolumeReverse") {
-      return this.state.dataBtcVolumeReverse;
+      return this.state.dataBtc.sort((a, b) => a.baseVolume - b.baseVolume);
     } else if (this.state.show === "xmrVolumeReverse") {
-      return this.state.dataXmrVolumeReverse;
+      return this.state.dataXmr.sort((a, b) => a.baseVolume - b.baseVolume);
     } else if (this.state.show === "ethVolumeReverse") {
-      return this.state.dataEthVolumeReverse;
+      return this.state.dataEth.sort((a, b) => a.baseVolume - b.baseVolume);
     } else if (this.state.show === "usdtVolumeReverse") {
-      return this.state.dataUsdtVolumeReverse;
+      return this.state.dataUsdt.sort((a, b) => a.baseVolume - b.baseVolume);
     } else if (this.state.show === "btcChange") {
-      return this.state.dataBtcChange;
+      return this.state.dataBtc.sort(
+        (a, b) => b.percentChange - a.percentChange
+      );
     } else if (this.state.show === "xmrChange") {
-      return this.state.dataXmrChange;
+      return this.state.dataXmr.sort(
+        (a, b) => b.percentChange - a.percentChange
+      );
     } else if (this.state.show === "ethChange") {
-      return this.state.dataEthChange;
+      return this.state.dataEth.sort(
+        (a, b) => b.percentChange - a.percentChange
+      );
     } else if (this.state.show === "usdtChange") {
-      return this.state.dataUsdtChange;
+      return this.state.dataUsdt.sort(
+        (a, b) => b.percentChange - a.percentChange
+      );
     } else if (this.state.show === "btcChangeReverse") {
-      return this.state.dataBtcChangeReverse;
+      return this.state.dataBtc.sort(
+        (a, b) => a.percentChange - b.percentChange
+      );
     } else if (this.state.show === "xmrChangeReverse") {
-      return this.state.dataXmrChangeReverse;
+      return this.state.dataXmr.sort(
+        (a, b) => a.percentChange - b.percentChange
+      );
     } else if (this.state.show === "ethChangeReverse") {
-      return this.state.dataEthChangeReverse;
+      return this.state.dataEth.sort(
+        (a, b) => a.percentChange - b.percentChange
+      );
     } else if (this.state.show === "usdtChangeReverse") {
-      return this.state.dataUsdtChangeReverse;
+      return this.state.dataUsdt.sort(
+        (a, b) => a.percentChange - b.percentChange
+      );
     } else if (this.state.show === "btcPrice") {
-      return this.state.dataBtcPrice;
+      return this.state.dataBtc.sort((a, b) => b.last - a.last);
     } else if (this.state.show === "xmrPrice") {
-      return this.state.dataXmrPrice;
+      return this.state.dataXmr.sort((a, b) => b.last - a.last);
     } else if (this.state.show === "ethPrice") {
-      return this.state.dataEthPrice;
+      return this.state.dataEth.sort((a, b) => b.last - a.last);
     } else if (this.state.show === "usdtPrice") {
-      return this.state.dataUsdtPrice;
+      return this.state.dataUsdt.sort((a, b) => b.last - a.last);
     } else if (this.state.show === "btcPriceReverse") {
-      return this.state.dataBtcPriceReverse;
+      return this.state.dataBtc.sort((a, b) => a.last - b.last);
     } else if (this.state.show === "xmrPriceReverse") {
-      return this.state.dataXmrPriceReverse;
+      return this.state.dataXmr.sort((a, b) => a.last - b.last);
     } else if (this.state.show === "ethPriceReverse") {
-      return this.state.dataEthPriceReverse;
+      return this.state.dataEth.sort((a, b) => a.last - b.last);
     } else if (this.state.show === "usdtPriceReverse") {
-      return this.state.dataUsdtPriceReverse;
+      return this.state.dataUsdt.sort((a, b) => a.last - b.last);
     } else if (this.state.show === "search") {
       let results = [];
       results = this.state.dataBtc

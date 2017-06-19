@@ -520,5 +520,6 @@ export class RedditWeb extends React.Component {
   }
 }
 
-//test
+//layout sizing
 //refreshcontrol
+//markdown

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, WebView, Image } from "react-native";
+import { Text, View, WebView } from "react-native";
 import {
   Container,
   Content,

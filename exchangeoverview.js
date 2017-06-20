@@ -785,13 +785,13 @@ export default class Exchangeoverview extends React.Component {
             active={this.state.activeTwo}
             direction="right"
             containerStyle={{ marginLeft: 10 }}
-            style={{ backgroundColor: "#5067FF" }}
+            style={{ backgroundColor: "#5067FF", height: 0 }}
             position="bottomLeft"
             onPress={() => this.setState({ activeTwo: !this.state.activeTwo })}
           >
             <Icon name="keypad" />
             <Button
-              style={{ backgroundColor: "lightblue" }}
+              style={{ backgroundColor: "lightblue", height: 0 }}
               onPress={() => {
                 this.reverseSort();
               }}
@@ -803,7 +803,7 @@ export default class Exchangeoverview extends React.Component {
               />
             </Button>
             <Button
-              style={{ backgroundColor: "darkred" }}
+              style={{ backgroundColor: "darkred", height: 0 }}
               onPress={() => {
                 this.priceSort();
               }}
@@ -815,7 +815,7 @@ export default class Exchangeoverview extends React.Component {
               />
             </Button>
             <Button
-              style={{ backgroundColor: "green" }}
+              style={{ backgroundColor: "green", height: 0 }}
               onPress={() => {
                 this.changeSort();
               }}
@@ -823,7 +823,7 @@ export default class Exchangeoverview extends React.Component {
               <Thumbnail source={require("./change.png")} small size={25} />
             </Button>
             <Button
-              style={{ backgroundColor: "yellow" }}
+              style={{ backgroundColor: "yellow", height: 0 }}
               onPress={() => {
                 this.volumeSort();
               }}

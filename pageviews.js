@@ -299,9 +299,9 @@ class ViewsTwo extends React.Component {
         } catch (error) {
           console.error(error);
         }
-        setInterval(() => {
-          //this.refreshTrades(); //to be uncommented
-          //this.delayedOrders();
+        this.intervalId = setInterval(() => {
+          this.refreshTrades(); //to be uncommented
+          this.delayedOrders();
           console.log("refreshed both");
         }, 5000);
         break;
@@ -313,8 +313,8 @@ class ViewsTwo extends React.Component {
         } catch (error) {
           console.error(error);
         }
-        setInterval(() => {
-          //this.refreshTrades(); //to be uncommented
+        this.intervalId = setInterval(() => {
+          this.refreshTrades(); //to be uncommented
           console.log("refreshed trades");
         }, 5000);
         break;
@@ -351,6 +351,10 @@ class ViewsTwo extends React.Component {
         break;
     }
     return result;
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
   }
 
   render() {
@@ -820,11 +824,9 @@ const styles = StyleSheet.create({
   }
 });
 
-//clearinterval
 //order totals //inaccurate
 //list
 //top spacing
 //props[register]
-//sellordertotals
+//unmountedComponent
 //layout
-//uncomment

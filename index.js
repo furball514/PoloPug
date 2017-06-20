@@ -22,7 +22,8 @@ export default class Index extends React.Component {
       <Container>
         <Header hasTabs>
           <Text>
-            {" "}This project is open sourced under the GNU-GPL v3.0 License.
+            {" "}https://ee.glitch.me/rJBdnfrXW This project is open sourced
+            under the GNU GPL v3.0 License.
             {" "}
           </Text>
         </Header>

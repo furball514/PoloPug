@@ -74,6 +74,54 @@ export default class Exchangeoverview extends React.Component {
     this.getData();
   }
 
+  _onRefresh() {
+    this.setState({ refreshing: true });
+    axios
+      .get("https://poloniex.com/public?command=returnTicker")
+      .then(data => {
+        let pairsData = {
+          toBtc: [],
+          toEth: [],
+          toXmr: [],
+          toUsdt: []
+        };
+
+        for (let name in data.data) {
+          let value = data.data[name];
+          switch (name.slice(0, 3)) {
+            case "BTC":
+              value.pair = name;
+              pairsData.toBtc.push(value);
+              break;
+            case "ETH":
+              value.pair = name;
+              pairsData.toEth.push(value);
+              break;
+            case "XMR":
+              value.pair = name;
+              pairsData.toXmr.push(value);
+              break;
+            case "USD":
+              value.pair = name;
+              pairsData.toUsdt.push(value);
+              break;
+          }
+        }
+
+        this.setState({
+          dataBtc: pairsData.toBtc,
+          dataEth: pairsData.toEth,
+          dataXmr: pairsData.toXmr,
+          dataUsdt: pairsData.toUsdt
+        });
+        console.log("refreshed");
+      })
+      .then(() => {
+        this.setState({ refreshing: false });
+        console.log(this.state.refreshing);
+      });
+  }
+
   colorAssign(change) {
     let result;
     switch (change.charAt(0)) {
@@ -678,7 +726,17 @@ export default class Exchangeoverview extends React.Component {
     return (
       <Container>
         <Container>
-          <Content style={{ marginTop: 10 }}>
+          <Content
+            style={{ marginTop: 10 }}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={() => {
+                  this._onRefresh();
+                }}
+              />
+            }
+          >
             <Item rounded>
               <Icon style={{ color: "lightgrey" }} name="search" />
               <Input

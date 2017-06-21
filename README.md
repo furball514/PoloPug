@@ -4,12 +4,12 @@ Unofficial Poloniex Exchange Mobile App
 
 * [CRNA](https://github.com/react-community/create-react-native-app): source code at branch _master_
 * [Server](https://bright-element.glitch.me): source code at branch _glitch_
-* [Expo](): source code at branch _expo_
+* [Expo](https://expo.io/@furball514/polopug): source code at branch _expo_
 
 Links
 ----
 * _more to come_
-* Expo: 
+* Expo: exp://exp.host/@furball514/polopug
 
 ----
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).

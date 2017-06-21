@@ -1,5 +1,11 @@
 {
   "expo": {
-    "sdkVersion": "16.0.0"
+    "sdkVersion": "16.0.0",
+    "name": "PoloPug",
+    "icon": "./price.png",
+    "version": "1.0.0",
+    "privacy": "public",
+    "primaryColor": "#1e2324",
+    "description": "Unofficial Poloniex Exchange App"
   }
 }

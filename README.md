@@ -1,7 +1,17 @@
+**PoloPug**
+----
+Unofficial Poloniex Exchange Mobile App
 
-#**WORK IN PROGRESS**
----------------------
+* [CRNA](https://github.com/react-community/create-react-native-app): source code at branch _master_
+* [Server](https://bright-element.glitch.me): source code at branch _glitch_
+* [Expo](): source code at branch _expo_
 
+Links
+----
+* _more to come_
+* Expo: 
+
+----
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).

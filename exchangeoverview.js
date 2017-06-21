@@ -97,77 +97,93 @@ export default class Exchangeoverview extends React.Component {
     } else if (this.state.show === "usdt") {
       return this.state.dataUsdt;
     } else if (this.state.show === "btcReverse") {
-      return this.state.dataBtc.reverse();
+      return [].concat(this.state.dataBtc).reverse();
     } else if (this.state.show === "xmrReverse") {
-      return this.state.dataXmr.reverse();
+      return [].concat(this.state.dataXmr).reverse();
     } else if (this.state.show === "ethReverse") {
-      return this.state.dataEth.reverse();
+      return [].concat(this.state.dataEth).reverse();
     } else if (this.state.show === "usdtReverse") {
-      return this.state.dataUsdt.reverse();
+      return [].concat(this.state.dataUsdt).reverse();
     } else if (this.state.show === "btcVolume") {
-      return this.state.dataBtc.sort((a, b) => b.baseVolume - a.baseVolume);
+      return []
+        .concat(this.state.dataBtc)
+        .sort((a, b) => b.baseVolume - a.baseVolume);
     } else if (this.state.show === "xmrVolume") {
-      return this.state.dataXmr.sort((a, b) => b.baseVolume - a.baseVolume);
+      return []
+        .concat(this.state.dataXmr)
+        .sort((a, b) => b.baseVolume - a.baseVolume);
     } else if (this.state.show === "ethVolume") {
-      return this.state.dataEth.sort((a, b) => b.baseVolume - a.baseVolume);
+      return []
+        .concat(this.state.dataEth)
+        .sort((a, b) => b.baseVolume - a.baseVolume);
     } else if (this.state.show === "usdtVolume") {
-      return this.state.dataUsdt.sort((a, b) => b.baseVolume - a.baseVolume);
+      return []
+        .concat(this.state.dataUsdt)
+        .sort((a, b) => b.baseVolume - a.baseVolume);
     } else if (this.state.show === "btcVolumeReverse") {
-      return this.state.dataBtc.sort((a, b) => a.baseVolume - b.baseVolume);
+      return []
+        .concat(this.state.dataBtc)
+        .sort((a, b) => a.baseVolume - b.baseVolume);
     } else if (this.state.show === "xmrVolumeReverse") {
-      return this.state.dataXmr.sort((a, b) => a.baseVolume - b.baseVolume);
+      return []
+        .concat(this.state.dataXmr)
+        .sort((a, b) => a.baseVolume - b.baseVolume);
     } else if (this.state.show === "ethVolumeReverse") {
-      return this.state.dataEth.sort((a, b) => a.baseVolume - b.baseVolume);
+      return []
+        .concat(this.state.dataEth)
+        .sort((a, b) => a.baseVolume - b.baseVolume);
     } else if (this.state.show === "usdtVolumeReverse") {
-      return this.state.dataUsdt.sort((a, b) => a.baseVolume - b.baseVolume);
+      return []
+        .concat(this.state.dataUsdt)
+        .sort((a, b) => a.baseVolume - b.baseVolume);
     } else if (this.state.show === "btcChange") {
-      return this.state.dataBtc.sort(
-        (a, b) => b.percentChange - a.percentChange
-      );
+      return []
+        .concat(this.state.dataBtc)
+        .sort((a, b) => b.percentChange - a.percentChange);
     } else if (this.state.show === "xmrChange") {
-      return this.state.dataXmr.sort(
-        (a, b) => b.percentChange - a.percentChange
-      );
+      return []
+        .concat(this.state.dataXmr)
+        .sort((a, b) => b.percentChange - a.percentChange);
     } else if (this.state.show === "ethChange") {
-      return this.state.dataEth.sort(
-        (a, b) => b.percentChange - a.percentChange
-      );
+      return []
+        .concat(this.state.dataEth)
+        .sort((a, b) => b.percentChange - a.percentChange);
     } else if (this.state.show === "usdtChange") {
-      return this.state.dataUsdt.sort(
-        (a, b) => b.percentChange - a.percentChange
-      );
+      return []
+        .concat(this.state.dataUsdt)
+        .sort((a, b) => b.percentChange - a.percentChange);
     } else if (this.state.show === "btcChangeReverse") {
-      return this.state.dataBtc.sort(
-        (a, b) => a.percentChange - b.percentChange
-      );
+      return []
+        .concat(this.state.dataBtc)
+        .sort((a, b) => a.percentChange - b.percentChange);
     } else if (this.state.show === "xmrChangeReverse") {
-      return this.state.dataXmr.sort(
-        (a, b) => a.percentChange - b.percentChange
-      );
+      return []
+        .concat(this.state.dataXmr)
+        .sort((a, b) => a.percentChange - b.percentChange);
     } else if (this.state.show === "ethChangeReverse") {
-      return this.state.dataEth.sort(
-        (a, b) => a.percentChange - b.percentChange
-      );
+      return []
+        .concat(this.state.dataEth)
+        .sort((a, b) => a.percentChange - b.percentChange);
     } else if (this.state.show === "usdtChangeReverse") {
-      return this.state.dataUsdt.sort(
-        (a, b) => a.percentChange - b.percentChange
-      );
+      return []
+        .concat(this.state.dataUsdt)
+        .sort((a, b) => a.percentChange - b.percentChange);
     } else if (this.state.show === "btcPrice") {
-      return this.state.dataBtc.sort((a, b) => b.last - a.last);
+      return [].concat(this.state.dataBtc).sort((a, b) => b.last - a.last);
     } else if (this.state.show === "xmrPrice") {
-      return this.state.dataXmr.sort((a, b) => b.last - a.last);
+      return [].concat(this.state.dataXmr).sort((a, b) => b.last - a.last);
     } else if (this.state.show === "ethPrice") {
-      return this.state.dataEth.sort((a, b) => b.last - a.last);
+      return [].concat(this.state.dataEth).sort((a, b) => b.last - a.last);
     } else if (this.state.show === "usdtPrice") {
-      return this.state.dataUsdt.sort((a, b) => b.last - a.last);
+      return [].concat(this.state.dataUsdt).sort((a, b) => b.last - a.last);
     } else if (this.state.show === "btcPriceReverse") {
-      return this.state.dataBtc.sort((a, b) => a.last - b.last);
+      return [].concat(this.state.dataBtc).sort((a, b) => a.last - b.last);
     } else if (this.state.show === "xmrPriceReverse") {
-      return this.state.dataXmr.sort((a, b) => a.last - b.last);
+      return [].concat(this.state.dataXmr).sort((a, b) => a.last - b.last);
     } else if (this.state.show === "ethPriceReverse") {
-      return this.state.dataEth.sort((a, b) => a.last - b.last);
+      return [].concat(this.state.dataEth).sort((a, b) => a.last - b.last);
     } else if (this.state.show === "usdtPriceReverse") {
-      return this.state.dataUsdt.sort((a, b) => a.last - b.last);
+      return [].concat(this.state.dataUsdt).sort((a, b) => a.last - b.last);
     } else if (this.state.show === "search") {
       let results = [];
       results = this.state.dataBtc
@@ -785,13 +801,13 @@ export default class Exchangeoverview extends React.Component {
             active={this.state.activeTwo}
             direction="right"
             containerStyle={{ marginLeft: 10 }}
-            style={{ backgroundColor: "#5067FF", height: 0 }}
+            style={{ backgroundColor: "#5067FF" }}
             position="bottomLeft"
             onPress={() => this.setState({ activeTwo: !this.state.activeTwo })}
           >
             <Icon name="keypad" />
             <Button
-              style={{ backgroundColor: "lightblue", height: 0 }}
+              style={{ backgroundColor: "lightblue" }}
               onPress={() => {
                 this.reverseSort();
               }}
@@ -803,7 +819,7 @@ export default class Exchangeoverview extends React.Component {
               />
             </Button>
             <Button
-              style={{ backgroundColor: "darkred", height: 0 }}
+              style={{ backgroundColor: "darkred" }}
               onPress={() => {
                 this.priceSort();
               }}
@@ -815,7 +831,7 @@ export default class Exchangeoverview extends React.Component {
               />
             </Button>
             <Button
-              style={{ backgroundColor: "green", height: 0 }}
+              style={{ backgroundColor: "green" }}
               onPress={() => {
                 this.changeSort();
               }}
@@ -823,7 +839,7 @@ export default class Exchangeoverview extends React.Component {
               <Thumbnail source={require("./change.png")} small size={25} />
             </Button>
             <Button
-              style={{ backgroundColor: "yellow", height: 0 }}
+              style={{ backgroundColor: "yellow" }}
               onPress={() => {
                 this.volumeSort();
               }}

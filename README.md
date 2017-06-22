@@ -5,10 +5,12 @@ Unofficial Poloniex Exchange Mobile App
 * [CRNA](https://github.com/react-community/create-react-native-app): source code at branch _master_
 * [Server](https://bright-element.glitch.me): source code at branch [_glitch_](https://github.com/furball514/PoloPug/tree/glitch)
 * [Expo](https://expo.io/@furball514/polopug): source code at branch [_expo_](https://github.com/furball514/PoloPug/tree/expo)
+* [Expo Standalone Build](): source code at branch [_expo-standalone_](https://github.com/furball514/PoloPug/tree/expo)
 
 Links
 ----
 * _more to come_
+* Direct Download: [Android APK]()
 * Expo: [exp://exp.host/@furball514/polopug](https://expo.io/@furball514/polopug)
 
 Screenshots

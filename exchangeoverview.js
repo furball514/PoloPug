@@ -914,6 +914,3 @@ export default class Exchangeoverview extends React.Component {
     );
   }
 }
-
-//refreshcontrol
-//sort

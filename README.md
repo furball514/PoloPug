@@ -14,6 +14,12 @@ Links
 df579-572c-11e7-8fac-0a580a780057-signed.apk)
 * Expo: [exp://exp.host/@furball514/polopug](https://expo.io/@furball514/polopug)
 
+Known Bugs
+----
+New bugs appear in the published app at expo and standalone apk build, bugs which were not there in development.(source code of master branch previewed in expo app with `npm start`)
+
+example: extra fixed-action-buttons rendered,Etc.
+
 Screenshots
 ----
 [![one.png](https://s2.postimg.org/kzp3rbt55/one.png)](https://postimg.org/image/b2e2y9lj9/)

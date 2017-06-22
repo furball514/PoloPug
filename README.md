@@ -9,7 +9,7 @@ Unofficial Poloniex Exchange Mobile App
 Links
 ----
 * _more to come_
-* [Expo](https://expo.io/@furball514/polopug): exp://exp.host/@furball514/polopug
+* Expo: [exp://exp.host/@furball514/polopug](https://expo.io/@furball514/polopug)
 
 Screenshots
 ----

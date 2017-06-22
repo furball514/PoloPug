@@ -1,5 +1,6 @@
 To build from this branch you will need `exp`.
 
+* Install package dependencies first
 * `npm install -g exp`
 * `exp start` to boot up
 * `exp build:android` to build

@@ -1,6 +1,6 @@
 This App Is Published At Expo
 ----
-exp://exp.host/@furball514/polopug
+[exp://exp.host/@furball514/polopug](https://expo.io/@furball514/polopug)
 
 Known Bugs
 ----

@@ -857,7 +857,7 @@ export default class Exchangeoverview extends React.Component {
 
           <Fab
             active={this.state.activeTwo}
-            direction="right"
+            direction="up"
             containerStyle={{ marginLeft: 10 }}
             style={{ backgroundColor: "#5067FF" }}
             position="bottomLeft"

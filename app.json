@@ -1,5 +1,16 @@
 {
   "expo": {
-    "sdkVersion": "16.0.0"
+    "sdkVersion": "16.0.0",
+    "name": "PoloPug",
+    "description": "Unofficial Poloniex Exchange Mobile App",
+    "icon": "./price.png",
+    "version": "1.0.0",
+    "slug": "polopug",
+    "android": {
+      "package": "com.furball514.polopug"
+    },
+    "privacy": "public",
+    "primaryColor": "#3F51B7",
+    "androidStatusBarColor": "#06474B"
   }
 }

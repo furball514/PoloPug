@@ -15,7 +15,7 @@ Links
 
 Known Bugs
 ----
-New bugs appear in the published app at expo and standalone apk build, bugs which were not there in development.(source code of master branch previewed in expo app with `npm start`)
+New bugs appear in the published app at expo and standalone apk build, bugs which were not there in development mode.(source code of master branch previewed in expo app with `npm start`)
 
 example: extra fixed-action-buttons rendered,Etc.
 

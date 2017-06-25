@@ -11,6 +11,7 @@ Links
 ----
 * _more to come_
 * Direct Download: [Android APK](https://exp-shell-app-assets.s3-us-west-1.amazonaws.com/android%2F%40furball514%2Fpolopug-0dadf579-572c-11e7-8fac-0a580a780057-signed.apk)
+* Amazon: https://www.amazon.com/Carr-Thicke-PoloPug/dp/B07354WNN8/ref=sr_1_1?s=mobile-apps
 * SAMSUNG Galaxy Apps[beta]: http://apps.samsung.com/betastore/openAppDetail.as?appId=com.furball514.polopug
 * Aptoide: https://open-source-only.store.aptoide.com/app/market/com.furball514.polopug/1/29514993/PoloPug
 * Expo: [exp://exp.host/@furball514/polopug](https://expo.io/@furball514/polopug)

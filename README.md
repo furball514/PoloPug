@@ -1,4 +1,4 @@
-This is a cross-platform crytpcurrency tracker mobile app built with React Native and Expo. A server/API written in Nodejs is also included for performance.
+This is a cross-platform cryptocurrency tracker mobile app built with React Native and Expo. A server/API written in Nodejs is also included for performance.
 
 This app depends on Poloniex's and Reddit's API both of which has since been shutdown.
 

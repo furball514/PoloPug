@@ -1,6 +1,6 @@
 This is a cross-platform crytpcurrency tracker mobile app built with React Native and Expo. A server/API written in Nodejs is also included for performance.
 
-This app depends on Poloniex's and Reddit's API both of which have been shutdown.
+This app depends on Poloniex's and Reddit's API both of which has since been shutdown.
 
 * [CRNA](https://github.com/react-community/create-react-native-app): source code at branch _master_
 * [Server](https://bright-element.glitch.me): source code at branch [_glitch_](https://github.com/furball514/PoloPug/tree/glitch)
